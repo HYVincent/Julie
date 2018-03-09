@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path name = "external_storage_root" path="."/>
+    <!--如果name为空，会报错  java.lang.RuntimeException: Unable to get provider android.support.v4.content.FileProvider: java.lang.IllegalArgumentException: Name must not be empty-->
+</paths>

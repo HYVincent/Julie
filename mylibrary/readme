@@ -1,0 +1,9 @@
+封装一些常用的重复性代码
+
+所依赖的第三方库
+1、阿里巴巴的fastJson github:https://github.com/alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.1.67.android'
+2、通信框架EventBus github:https://github.com/greenrobot/EventBus
+    compile 'org.greenrobot:eventbus:3.1.1'
+3、网络框架 github:http://blog.csdn.net/sk719887916/article/details/52195428
+     compile 'com.tamic.novate:novate:1.5.4.5'

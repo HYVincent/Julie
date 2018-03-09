@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_background_white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="@dimen/size_25"
+        android:textSize="@dimen/text_size_16sp"
+        android:textColor="@color/color_black_000000"
+        android:text="文件上传中"
+        android:id="@+id/library_file_upload_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/library_file_upload_progress_tv"
+        android:layout_marginTop="@dimen/size_21"
+        android:layout_gravity="center"
+        android:text="0%"
+        android:textColor="@color/color_gray_666666"
+        android:textSize="@dimen/text_size_12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/library_file_upload_progress_pb"
+        style="@style/CustomProgressBarStyle"
+        android:layout_marginRight="@dimen/size_10"
+        android:layout_marginLeft="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_8"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_6" />
+
+    <TextView
+        android:background="@color/color_gray_e5e5e5"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0.5" />
+
+    <TextView
+        android:id="@+id/library_file_upload_cancel_tv"
+        android:paddingTop="@dimen/size_15"
+        android:paddingBottom="@dimen/size_15"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/color_gray_999999"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_15sp"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

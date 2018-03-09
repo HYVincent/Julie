@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="240dp">
+
+    <RelativeLayout
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+
+        <LinearLayout
+            android:id="@+id/slide_list_select_cancel_ll"
+            android:layout_width="wrap_content"
+            android:minWidth="44dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/slide_list_select_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="取消"
+                android:textSize="12sp"
+                android:textColor="@color/color_blue_07aef5" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/slide_list_select_ok_ll"
+            android:layout_width="wrap_content"
+            android:minWidth="44dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/slide_list_select_ok"
+                android:text="确定"
+                android:textSize="12sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_blue_07aef5"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/slide_list_select_title"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray_e5e5e5"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
+    <com.vincent.mylibrary.view.NumberPickerView
+        android:id="@+id/slide_list_select_npv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_white_ffffff"
+        android:contentDescription="test_number_picker_view"
+        app:npv_ItemPaddingHorizontal="5dp"
+        app:npv_ItemPaddingVertical="5dp"
+        app:npv_DividerColor="@color/color_gray_f5f5f5"
+        app:npv_DividerHeight="@dimen/size_0.5"
+        app:npv_TextColorSelected="#333333"
+        app:npv_TextColorNormal="@color/color_gray_999999"
+        app:npv_TextColorHint="@color/color_gray_999999"
+        app:npv_ShowCount="5"
+        app:npv_TextSizeNormal="14sp"
+        app:npv_TextSizeSelected="14sp"
+        app:npv_WrapSelectorWheel="true"/>
+
+
+</LinearLayout>

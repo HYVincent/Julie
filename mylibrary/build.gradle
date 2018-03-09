@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.android.support:support-v4:27.0.1'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'org.greenrobot:eventbus:3.1.1'
+    //在app-moudle中也需要引入，不然提示找不到类
+    implementation 'com.alibaba:fastjson:1.1.67.android'
+    implementation files('libs/zxing.jar')
+//    compile 'com.tamic.novate:novate:1.5.4.5'
+    // https://github.com/orhanobut/logger
+    compile 'com.elvishew:xlog:1.4.0'
+    //    compile 'com.orhanobut:logger:2.1.1'
+    /** 状态栏沉浸library  http://blog.csdn.net/u011622280/article/details/52587618      */
+    compile 'com.jaeger.statusbaruitl:library:1.2.5'
+    compile 'com.alibaba:fastjson:1.1.65.android'
+    //Glide图片加载框架
+    compile 'com.github.bumptech.glide:glide:4.2.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
+    //权限适配 https://github.com/googlesamples/easypermissions
+    compile 'pub.devrel:easypermissions:1.1.2'
+}

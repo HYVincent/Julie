@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="249dp"
+        android:layout_height="174dp"
+        android:background="@drawable/shape_background_white">
+
+
+        <TextView
+            android:id="@+id/library_input_content_center_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/size_18"
+            android:textColor="@color/color_black_333333"
+            android:textSize="@dimen/text_size_12sp"
+            android:text="添加设备"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/library_input_content_center_ll"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/library_input_content_center_tv_cancel"
+                android:text="取消"
+                android:gravity="center"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/text_size_15sp"
+                android:layout_weight="1"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:background="@color/color_gray_e5e5e5"
+                android:layout_width="@dimen/size_1"
+                android:layout_height="@dimen/size_29" />
+
+            <TextView
+                android:id="@+id/library_input_content_center_tv_action"
+                android:text="确定"
+                android:gravity="center"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/text_size_15sp"
+                android:layout_weight="1"
+                android:layout_width="@dimen/size_0"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_above="@id/library_input_content_center_ll"
+            android:layout_below="@id/library_input_content_center_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:hint="输入设备的SN号码"
+                android:background="@null"
+                android:paddingLeft="@dimen/size_13"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_10"
+                android:textColorHint="@color/color_gray_e5e5e5"
+                android:textColor="@color/color_black_333333"
+                android:textSize="@dimen/text_size_12sp"
+                android:paddingBottom="@dimen/size_11"
+                android:id="@+id/library_input_content_center_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:background="@color/color_gray_e5e5e5"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_marginLeft="@dimen/size_10"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
