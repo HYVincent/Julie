@@ -2,6 +2,8 @@ package com.vincent.julie.base;
 
 import android.app.Application;
 
+import com.mob.MobSDK;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.vincent.julie.bean.User;
 import com.vincent.mylibrary.MyLibrary;
 
@@ -16,18 +18,20 @@ import com.vincent.mylibrary.MyLibrary;
 
 public class MyApp extends Application{
 
-    private static User user;
+    public static User user;
+    private static MyApp myApp;
 
-    public static User getUser() {
-        return user;
+    public static MyApp getMyApp() {
+        return myApp;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        myApp = this;
         MyLibrary.init(this.getApplicationContext(),"Julie");
         user = new User();
-        user.user_phone="18696855784";
-        user.user_name="vincent";
+        MobSDK.init(this);
+        CrashReport.initCrashReport(getApplicationContext(), "9589575c85", false);
     }
 }

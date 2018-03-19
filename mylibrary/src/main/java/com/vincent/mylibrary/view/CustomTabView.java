@@ -1,10 +1,12 @@
 package com.vincent.mylibrary.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 
 import com.vincent.mylibrary.R;
+import com.vincent.mylibrary.more_language.AppTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +61,8 @@ public class CustomTabView extends LinearLayout implements View.OnClickListener{
         setGravity(Gravity.CENTER);
         mTabViews = new ArrayList<>();
         mTabs = new ArrayList<>();
-
     }
+
 
     /**
      * 添加Tab
@@ -67,8 +70,8 @@ public class CustomTabView extends LinearLayout implements View.OnClickListener{
      */
     public void addTab(Tab tab){
         View view = LayoutInflater.from(getContext()).inflate(R.layout.library_view_tab,null,false);
-        TextView textView = (TextView) view.findViewById(R.id.custom_tab_text);
-        ImageView imageView = (ImageView) view.findViewById(R.id.custom_tab_icon);
+        AppTextView textView =  view.findViewById(R.id.custom_tab_text);
+        ImageView imageView =  view.findViewById(R.id.custom_tab_icon);
         imageView.setImageResource(tab.mIconNormalResId);
         textView.setText(tab.mText);
         textView.setTextColor(tab.mNormalColor);
@@ -84,6 +87,24 @@ public class CustomTabView extends LinearLayout implements View.OnClickListener{
     }
 
     /**
+     * 这个方法是为了语言国际化刷新table文字使用的
+     * @param datas
+     */
+   public void replaceTabText(List<String> datas){
+       if(datas.size() != mTabs.size()){
+           throw new RuntimeException("datas size is error........");
+       }
+        for (int i = 0;i<mTabs.size();i++){
+            String title = datas.get(i);
+            Log.d("啊啊啊啊", "replaceTabText: title = "+title);
+            mTabs.get(i).setText(title);
+            View view = mTabViews.get(i);
+            TextView textView = view.findViewById(R.id.custom_tab_text);
+            textView.setText(title);
+        }
+   }
+
+    /**
      * 设置选中Tab
      * @param position
      */
@@ -95,8 +116,6 @@ public class CustomTabView extends LinearLayout implements View.OnClickListener{
          mTabViews.get(position).performClick();
 
         updateState(position);
-
-
     }
 
     /**
@@ -106,8 +125,8 @@ public class CustomTabView extends LinearLayout implements View.OnClickListener{
     private void updateState(int position){
         for(int i= 0;i<mTabViews.size();i++){
             View view = mTabViews.get(i);
-            TextView textView = (TextView) view.findViewById(R.id.custom_tab_text);
-            ImageView imageView = (ImageView) view.findViewById(R.id.custom_tab_icon);
+            TextView textView =  view.findViewById(R.id.custom_tab_text);
+            ImageView imageView =  view.findViewById(R.id.custom_tab_icon);
             if(i == position){
                 imageView.setImageResource(mTabs.get(i).mIconPressedResId);
                 textView.setTextColor(mTabs.get(i).mSelectColor);

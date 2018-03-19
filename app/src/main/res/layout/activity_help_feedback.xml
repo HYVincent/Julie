@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/include_layout_title"/>
+
+    <com.vincent.mylibrary.more_language.AppTextView
+        android:id="@+id/help_feedback_tv_help"
+        android:paddingLeft="@dimen/size_15"
+        android:textColor="@color/color_black_333333"
+        android:gravity="center_vertical"
+        android:text="@string/help_feedback_text_help"
+        android:layout_marginTop="@dimen/size_25"
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_0.5"
+        android:layout_marginRight="@dimen/size_15"
+        android:layout_marginLeft="@dimen/size_15"
+        android:background="@color/color_gray_999999"/>
+
+    <com.vincent.mylibrary.more_language.AppTextView
+        android:id="@+id/help_feedback_tv_feedback"
+        android:paddingLeft="@dimen/size_15"
+        android:textColor="@color/color_black_333333"
+        android:gravity="center_vertical"
+        android:text="@string/help_feedback_text_feedback"
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44" />
+
+</LinearLayout>

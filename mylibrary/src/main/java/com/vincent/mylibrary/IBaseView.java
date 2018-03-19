@@ -12,9 +12,9 @@ package com.vincent.mylibrary;
 public interface IBaseView {
 
     /**
-     * 数据加载失败..
+     * 接口请求失败处理..
      */
-    void loadFail(String errorMsg);
+    void loadFail();
 
     /**
      * 显示加载效果

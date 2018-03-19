@@ -1,5 +1,7 @@
 package com.vincent.julie.netty.msg;
 
+import com.vincent.julie.base.MyApp;
+
 import java.io.Serializable;
 
 /**
@@ -19,7 +21,7 @@ public abstract class BaseMsg implements Serializable {
 
     //初始化客户端id
     public BaseMsg() {
-        this.phoneNum = Constants.getPhoneNum();
+        this.phoneNum = MyApp.user.getUser_phone();
     }
 
     public String getPhoneNum() {

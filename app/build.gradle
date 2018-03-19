@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 26
@@ -6,15 +7,68 @@ android {
         applicationId "com.vincent.julie"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 1001
+        versionName "1.0.01"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled false
+            storeFile file("../Julie.jks")
+            storePassword '79823qweAB'
+            keyAlias 'Julie'
+            keyPassword '79823qweAB'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            //启用代码混淆 如果使用jdk1.8则不能混淆
+            minifyEnabled true
+            //zip压缩
+            zipAlignEnabled false
+            //移除无用的resource文件
+            shrinkResources false
+            //混淆规则配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            zipAlignEnabled false
+            //开启之后编译报错 transformClassesWithAndroidGradleClassShrinkerForDebug
+            //移除无用的resource文件
+            shrinkResources false
+            //开启之后编译报错 transformClassesWithAndroidGradleClassShrinkerForDebug
+            //开启混淆
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+// 在MobSDK的扩展中注册SMSSDK的相关信息
+MobSDK {
+    appKey "2491e8a877cc2"
+    appSecret "4b833e7310d55f8d2b904f3770f15401"
+
+    SMSSDK {}
+}
+
+subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.android.support'
+                    && !details.requested.name.contains('multidex') ) {
+                details.useVersion "26.0.2"
+            }
         }
     }
 }
@@ -28,4 +82,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':mylibrary')
     implementation files('libs/netty-all-4.1.20.Final.jar')
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.tamic.novate:novate:1.5.4.5'
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    //APP角标控制 https://github.com/leolin310148/ShortcutBadger
+    compile "me.leolin:ShortcutBadger:1.1.21@aar"
 }

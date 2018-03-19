@@ -11,6 +11,7 @@
     <color name="color_gray_9fa1a9">#9fa1a9</color>
     <color name="color_gray_666666">#666666</color>
     <color name="color_black_000000">#000000</color>
+    <color name="color_gray_f1f3f4">#f1f3f4</color>
 
     <!--半透明-->
     <color name="color_black_semitransparent">#e0000000</color>

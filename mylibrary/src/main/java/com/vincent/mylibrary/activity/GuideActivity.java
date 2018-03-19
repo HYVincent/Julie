@@ -144,7 +144,7 @@ public class GuideActivity extends AppCompatActivity{
     }
 
     private void goLogin() {
-        IntentUtils.startImplicitActivity(GuideActivity.this,"com.toncentsoft.starkangmedical_android.widget.login.LoginActivity");
+        IntentUtils.startImplicitActivity(GuideActivity.this,"LoginActivity");
         finish();
     }
 

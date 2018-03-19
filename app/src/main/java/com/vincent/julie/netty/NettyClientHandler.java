@@ -41,7 +41,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                         lastClickTime = System.currentTimeMillis();
                         PingMsg pingMsg = new PingMsg();
                         pingMsg.setType(MsgType.PING);
-                        pingMsg.setPhoneNum(MyApp.getUser().user_phone);
+                        pingMsg.setPhoneNum(MyApp.user.getUser_phone());
                         ctx.writeAndFlush(pingMsg);
                         System.out.println("send ping to server----------"+ DateUtils.getDateString(DateUtils.DATE_FORMAT_ALL,System.currentTimeMillis())+"--------------");
                     }
@@ -86,8 +86,8 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                 //向服务器发起登录
                 LoginMsg loginMsg = new LoginMsg();
                 loginMsg.setType(MsgType.LOGIN);
-                loginMsg.setPhoneNum(MyApp.getUser().user_phone);
-                loginMsg.setUserName(MyApp.getUser().user_name);
+                loginMsg.setPhoneNum(MyApp.user.getUser_phone());
+                loginMsg.setUserName(MyApp.user.getUser_name());
                 channelHandlerContext.writeAndFlush(loginMsg);
                 break;
             case PING:
@@ -96,7 +96,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
             case PUSH:
                 PushMsg pushMsg = (PushMsg) baseMsg;
                 if(pushMsg!=null){
-                    Log.d(TAG, "messageReceived: "+pushMsg.getPhoneNum()+" "+pushMsg.getAccount());
+                    Log.d(TAG, "messageReceived: "+pushMsg.getPhoneNum()+" "+String.valueOf(pushMsg.getData()));
                 }else {
                     Log.d(TAG, "messageReceived: the pushMsg is null");
                 }

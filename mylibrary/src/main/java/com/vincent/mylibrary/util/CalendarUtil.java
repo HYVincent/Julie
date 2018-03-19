@@ -1,5 +1,7 @@
 package com.vincent.mylibrary.util;
 
+import android.text.TextUtils;
+
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -142,6 +144,9 @@ public class CalendarUtil {
      * @return
      */
     public static Date strToDate(String format,String strDate){
+        if(TextUtils.isEmpty(strDate)){
+           throw new NullPointerException("strDate is null.");
+        }
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         ParsePosition pos = new ParsePosition(0);
         Date strtodate = formatter.parse(strDate, pos);

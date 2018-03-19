@@ -2,10 +2,19 @@ package com.vincent.mylibrary.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author Administrator QQ:1032006226
@@ -18,6 +27,7 @@ import java.io.InputStream;
 
 public class FileUtil {
 
+    private static final String TAG = FileUtil.class.getSimpleName();
 
     /**
      * 对文件重命名
@@ -57,6 +67,21 @@ public class FileUtil {
             }
         }
         return filename;
+    }
+
+    /**
+     * 从文件路径中获取文件名
+     * @param pathandname
+     * @return
+     */
+    public static String getFileName(String pathandname){
+        int start=pathandname.lastIndexOf("/");
+        int end=pathandname.lastIndexOf(".");
+        if(start!=-1 && end!=-1){
+            return pathandname.substring(start+1,end);
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -177,6 +202,107 @@ public class FileUtil {
             e.printStackTrace();
         }
         return "读取错误，请检查文件名";
+    }
+
+    /**
+     * 文件转为byte[]
+     * @param filePath
+     * @return
+     */
+    public static byte[] file2byte(String filePath)
+    {
+        byte[] buffer = null;
+        try {
+            File file = new File(filePath);
+            FileInputStream fis = new FileInputStream(file);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int n;
+            while ((n = fis.read(b)) != -1)
+            {
+                bos.write(b, 0, n);
+            }
+            fis.close();
+            bos.close();
+            buffer = bos.toByteArray();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+    /**
+     * byte[]转为文件
+     * @param buf
+     * @param filePath
+     * @param fileName
+     */
+    public static void byte2File(byte[] buf, String filePath, String fileName) {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        File file = null;
+        try {
+            File dir = new File(filePath);
+            if (!dir.exists() && dir.isDirectory()) {
+                dir.mkdirs();
+            }
+            file = new File(filePath + File.separator + fileName);
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(buf);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 根据文件绝对路径获取文件内容
+     * @param filePath
+     * @return
+     */
+    public static String getFileContentForPath(String filePath){
+        try{
+            if(TextUtils.isEmpty(filePath)){
+                return "";
+            }
+        /* 创建File对象，确定需要读取文件的信息 */
+//            File file = new File(Environment.getExternalStorageDirectory(),"f.txt");
+        /* FileInputSteam 输入流的对象， */
+            FileInputStream fis = new FileInputStream(new File(filePath));
+        /* 准备一个字节数组用户装即将读取的数据 */
+            byte[] buffer = new byte[fis.available()];
+        /* 开始进行文件的读取 */
+            fis.read(buffer);
+        /* 关闭流  */
+            fis.close();
+        /* 将字节数组转换成字符创， 并转换编码的格式 */
+            String res = new String(buffer,"utf-8");
+            return res;
+        }catch(Exception ex){
+            Log.e(TAG, "getFileContentForPath: 文件获取失败.." );
+            return "";
+        }
     }
 
 }

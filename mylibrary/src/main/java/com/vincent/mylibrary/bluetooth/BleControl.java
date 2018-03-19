@@ -25,9 +25,11 @@ import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONArray;
 import com.vincent.mylibrary.util.MainHandler;
 import com.vincent.mylibrary.util.ThreadPoolManager;
 import com.vincent.mylibrary.util.TimeCount;
+import com.vincent.mylibrary.util.TimeUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -72,9 +74,9 @@ public class BleControl {
     //默认蓝牙扫描时间 10s 低功耗蓝牙不需要自动停止扫描，除非连接设备的时候才停止扫描
 //    private static final long BLE_SCAN_TIME_OUT = 10 * 1000;
     /**
-    * 连接超时时间
+     * 连接超时时间 s
      */
-    private static final long BLE_CONNECT_TIME_OUT = 10 * 1000;
+    private static final long BLE_CONNECT_TIME_OUT = 15;
     /**
      * 蓝牙状态，打开
      */
@@ -147,6 +149,10 @@ public class BleControl {
      * 设备断开连接
      */
     public static final int BLE_STATUS_DISCONNECT = 10019;
+    /**
+     * 蓝牙扫描发生系统错误
+     */
+    public static final int BLE_SCAN_SYSTEM_ERROR = 10020;
     /**
      * 搜索到的蓝牙地址
      */
@@ -283,14 +289,21 @@ public class BleControl {
         }else {
             Log.d(TAG, "connect: mBleGatt is null.");
         }*/
+        stopBleScan();
         MainHandler.getInstance().post(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void run() {
                 /**
                  * 第二个参数表示是否需要自动连接。如果设置为 true, 表示如果设备断开了，会不断的尝试自动连接。设置为 false 表示只进行一次连接尝试。
                  第三个参数是连接后进行的一系列操作的回调，例如连接和断开连接的回调，发现服务的回调，成功写入数据，成功读取数据的回调等等
                  */
-                mBleGatt = device.connectGatt(mContext, enable, mGattCallback); //该函数才是真正的去进行连接
+//                mBleGatt = device.connectGatt(mContext, enable, mGattCallback); //该函数才是真正的去进行连接
+                //注意，上面一行代码连接蓝牙有时候会有133错误，下面的4个参数的连接方法解决这个错误
+                // https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#TRANSPORT_AUTO
+//                mBleGatt = device.connectGatt(mContext,enable,mGattCallback,2);
+                //https://stackoverflow.com/questions/27280402/every-connection-request-is-being-treated-as-direct-connect-request-android-bl
+                mBleGatt = (new BleConnectionCompat(mContext)).connectGatt(device, enable, mGattCallback);
                 if(hasStatusChangeNotificationListener()){
                     statusChangeNotificationListener.onChangeStatus(BLE_STATUS_SCAN_CONNECTING);
                 }
@@ -304,42 +317,46 @@ public class BleControl {
      * 超时断开连接
      */
     private void delayConnectResponse(){
-        TimeCount timeCount = new TimeCount(BLE_STATUS_CONNECT_TIME_OUT, new TimeCount.TimeOnListener() {
+        //这个不用取消
+        TimeCount timeCount = new TimeCount(BLE_CONNECT_TIME_OUT, new TimeCount.TimeOnListener() {
             @Override
             public void finishAction() {
                 if(!hasConnectResult && !isConnect){
+                    Log.d(TAG, "finishAction: connect time out.");
                     if(hasStatusChangeNotificationListener()){
                         statusChangeNotificationListener.onChangeStatus(BLE_STATUS_CONNECT_TIME_OUT);
                     }
-                    disConnection(false);
+                    disConnection();
                 }
             }
 
             @Override
             public void everyAction(int s) {
-
+//                Log.d(TAG, "everyAction: bluetooth connect "+s);
             }
         });
         timeCount.start();
     }
 
     //发现设备断开之后是否自动重新连接设备默认自动重连，手动断开之后不自动重连
-    private boolean isAutoConnect = true;
+//    private boolean isAutoConnect = true;
 
     /**
      * 断开连接
      */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public void disConnection(boolean isAutoConnect) {
+    public void disConnection() {
         if (null == mBleAdapter || null == mBleGatt) {
             Log.e(TAG, "disconnection error maybe no init");
             return;
         }
-        this.isAutoConnect = isAutoConnect;
         MainHandler.getInstance().post(new Runnable() {
             @Override
             public void run() {
                 mBleGatt.disconnect();
+                //有人说为什么不在gatt.disconnect();后加一条gatt.close();呢，原因是如果立即执行gatt.close();会导致gattCallback无法收到STATE_DISCONNECTED的状态。
+                // 当然，最好的办法是在gattCallback收到STATE_DISCONNECTED后再执行gatt.close();，这样逻辑上会更清析一些。
+                //http://bbs.eeworld.com.cn/thread-438571-1-1.html
 //                mBleGatt.close();
                 reset();
             }
@@ -370,7 +387,22 @@ public class BleControl {
             Log.d(TAG, "writeBuffer: the value is null,no send!");
             return;
         }
-        needSendData.add(value);
+        Log.d(TAG, "writeBuffer: 待检查的命令:"+value+" 长度"+value.length());
+        if(value.length()>40){
+            int totalPage = value.length() / 40;
+            int remainder = value.length() % 40;
+            System.out.println("totalPage="+totalPage);
+            for(int i = 0;i<totalPage;i++) {
+                String content = value.substring(i * 40, (i+1) * 40);
+                needSendData.add(content);
+            }
+            if(remainder != 0) {
+                needSendData.add(value.substring(totalPage * 40, value.length()));
+            }
+            Log.d(TAG, "writeBuffer: 分包->"+value);
+        }else {
+            needSendData.add(value);
+        }
         send();
     }
 
@@ -402,8 +434,8 @@ public class BleControl {
             Log.e(TAG, "date send fail 2，data = " + needSendData.get(0));
             return;
         }
-        //设置数组进去
         mBleGattCharacteristic.setValue(HexUtil.hexStringToBytes(needSendData.get(0)));
+        Log.d(TAG, "send: "+needSendData.size());
         //在主线程中写入数据
         MainHandler.getInstance().post(new Runnable() {
             @Override
@@ -419,8 +451,15 @@ public class BleControl {
                         statusChangeNotificationListener.onChangeStatus(BLE_STATUS_SEND_DATE_FAILE);
                     }
                 }
+                Log.d(TAG, "run: 待发送列表大小-->"+needSendData.size()+" "+ JSONArray.toJSONString(needSendData));
             }
         });
+        try {
+            //每次消息发送成功之后线程沉睡50ms
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -458,16 +497,17 @@ public class BleControl {
                         @Override
                         public void run() {
                             gatt.discoverServices(); //执行到这里其实蓝牙已经连接成功了
-                            Log.d(TAG, "onConnectionStateChange: 蓝牙连接成功..");
+                            Log.d(TAG, "onConnectionStateChange: --------------- Bluetooth connection success --------------------------");
                             isConnect = true;
                             hasConnectResult = true;
                             if(hasStatusChangeNotificationListener()){
                                 statusChangeNotificationListener.onChangeStatus(BLE_STATUS_CONNECT_SUCCESS);
                             }
+                            //连接成功，停止蓝牙扫描
+//                            stopBleScan();
                         }
                     });
-                    //连接成功，停止蓝牙扫描
-                    stopBleScan();
+
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     MainHandler.getInstance().post(new Runnable() {
                         @Override
@@ -475,17 +515,23 @@ public class BleControl {
                             //断开了
                             isConnect = false;
                             //掉线了就关闭连接释放资源
-                            gatt.disconnect();
-                            gatt.close();
+                            /*gatt.disconnect();
+                            gatt.close();*/
+                            if(mBleGatt != null){
+                                mBleGatt.disconnect();
+                                mBleGatt.close();
+                            }
                         }
                     });
                     if(hasStatusChangeNotificationListener()){
                         statusChangeNotificationListener.onChangeStatus(BLE_STATUS_DISCONNECT);
                         Log.d(TAG, "onConnectionStateChange: bluetooth device status is disconnect.");
                     }
-                    if(!TextUtils.isEmpty(currentConnectAddress)&& isEnable()&& isAutoConnect){
+                    if(!TextUtils.isEmpty(currentConnectAddress)&& isEnable()){
                         Log.d(TAG, "onConnectionStateChange:it will attempt auto connect.");
-                        connect(currentConnectAddress,false);
+                        //注意，如果在这里直接进行重连尝试，这样有可能报错，然后连接失败，最好是再次扫描，然后连接..
+//                        reconnectLastDevice();
+//                        connect(currentConnectAddress,false);
                         if(hasStatusChangeNotificationListener()){
                             statusChangeNotificationListener.onChangeStatus(BLE_STATUS_BREAK_RECONNECTION);
                         }
@@ -501,11 +547,19 @@ public class BleControl {
                 if(hasStatusChangeNotificationListener()){
                     statusChangeNotificationListener.onChangeStatus(BLE_STATUS_CONNECT_FAILE);
                 }
-                if(mBleGatt != null){
-                    mBleGatt.disconnect();
-                    mBleGatt.close();
-                }
+                MainHandler.getInstance().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mBleGatt != null){
+                            mBleGatt.disconnect();
+                            mBleGatt.close();
+                        }
+                    }
+                });
                 hasConnectResult = true;
+                if(scanResultListener != null){
+                    scanBle(scanResultListener);
+                }
             }
         }
 
@@ -538,6 +592,10 @@ public class BleControl {
                     if(hasStatusChangeNotificationListener()){
                         statusChangeNotificationListener.onChangeStatus(BLE_CONNECT_STATUS_ACCEPT_FAIL);
                     }
+                }else {
+                    if(hasStatusChangeNotificationListener()){
+                        statusChangeNotificationListener.onChangeStatus(BLE_CONNECT_STATUS_UNBLOCKED);
+                    }
                 }
             }
         }
@@ -563,15 +621,19 @@ public class BleControl {
             super.onCharacteristicWrite(gatt, characteristic, status);
             //不管发送成功还是失败都要调用send()函数，因为并不知道是否还有待发送命令
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Log.e(TAG, "Send data success! data ="+needSendData.get(0));
                 //命令发送成功
-                if(needSendData != null && needSendData.size() >0){
-                    needSendData.remove(0);
+                if(needSendData.size()!=0){
+                    Log.e(TAG, "Send data success! data ="+needSendData.get(0));
                 }
-                send();
                 if(hasStatusChangeNotificationListener()){
 //                    statusChangeNotificationListener.onChangeStatus(BLE_STATUS_DEVICE_ACCEPT_DATA);
                     statusChangeNotificationListener.onChangeStatus(BLE_STATUS_SEND_DATE_SUCCESS);
+                }
+                if(needSendData.size() >0){
+                    needSendData.remove(0);
+                }
+                if(needSendData.size() != 0){
+                    send();
                 }
             } else {
                 send();
@@ -614,9 +676,10 @@ public class BleControl {
         @Override
         public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
             super.onDescriptorWrite(gatt, descriptor, status);
-            if(hasStatusChangeNotificationListener()){
+            Log.d(TAG, "onDescriptorWrite: ....");
+            /*if(hasStatusChangeNotificationListener()){
                 statusChangeNotificationListener.onChangeStatus(BLE_CONNECT_STATUS_UNBLOCKED);
-            }
+            }*/
         }
 
         @Override
@@ -637,6 +700,25 @@ public class BleControl {
             Log.d(TAG, "onMtuChanged: ");
         }
     };
+
+    /**
+     * 重连上次连接成功的地址，注意，直接链接地址可能会失败，最好是先扫描，然后连接..
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void reconnectLastDevice() {
+        Log.d(TAG, "reconnectLastDevice: 从新扫描");
+        if(scanResultListener != null ){
+            if(scanning){
+                stopBleScan();
+            }
+            try {
+                Thread.sleep(1000);
+                scanBle(scanResultListener);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     /**
@@ -734,14 +816,65 @@ public class BleControl {
 
         @Override
         public void onBatchScanResults(List<ScanResult> results) {
-
-            Log.d(TAG,"onBatchScanResults");
+            Log.d(TAG,"onBatchScanResults"+results.size());
         }
+        //停止扫描...
+        private boolean isStoping = false;
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void onScanFailed(int errorCode) {
-            Log.d(TAG,"onScanFailed "+errorCode);
+            Log.d(TAG,"bluetooth scan fail-->onScanFailed-->errorCode = "+errorCode);
             scanning = false;
+            /*if(hasStatusChangeNotificationListener()){
+                statusChangeNotificationListener.onChangeStatus(BLE_SCAN_SYSTEM_ERROR);
+            }*/
+            // http://stackoverflow.com/questions/35376682/how-to-fix-android-ble-scan-failed-application-registration-failed-error
+            //底层蓝牙框架错误，无法避免，只有重启蓝牙
+            if (mBleAdapter != null && errorCode == 2) {
+                // 一旦发生错误，除了重启蓝牙再没有其它解决办法
+                mBleAdapter.disable();
+                ThreadPoolManager.getInstance().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        while(true) {
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            //要等待蓝牙彻底关闭，然后再打开，才能实现重启效果
+                            if(mBleAdapter.getState() == BluetoothAdapter.STATE_OFF) {
+                                mBleAdapter.enable();
+                                break;
+                            }
+                        }
+                    }
+                });
+            }else if(mBleAdapter != null && errorCode == 1){
+                /*if(isStoping){
+                    return;
+                }
+                isStoping = true;
+                stopBleScan();
+                ThreadPoolManager.getInstance().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                            if(scanResultListener != null){
+                                scanBle(scanResultListener);
+                            }else {
+                                Log.d(TAG, "run: scanResultListener is null.");
+                            }
+                            isStoping = false;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            isStoping = false;
+                        }
+                    }
+                });*/
+            }
         }
     };
 
@@ -779,7 +912,7 @@ public class BleControl {
                 @Override
                 public void finishAction() {
                     if(isEnable() && listener != null){
-                        Log.d(TAG, "run: 自动开始扫描...");
+                        Log.d(TAG, "run: auto scan bluetooth device ...");
                         scanBle(listener);
                     }
                 }
@@ -797,6 +930,7 @@ public class BleControl {
         }
         reset();
         ThreadPoolManager.getInstance().execute(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void run() {
                 //扫描尽量不要放在主线程进行，可以放入子线程里。不然有些机型会出现 do too many work in main thread.
@@ -883,17 +1017,23 @@ public class BleControl {
         }
         return false;
     }
+    //是否正在打开蓝牙 false 否 true 正在打开
+    private boolean isOpening = false;
 
     /**
      * 打开蓝牙
      * @return
      */
-    public BleControl openBle(){
+    public void openBle(){
+        if(isOpening){
+            return ;
+        }
         if(!isEnable()){
             //检测蓝牙是否打开
             if(mBleAdapter!= null){
                 //打开蓝牙 打开方式有两种 1、隐式打开  2、显示打开
                 //隐式打开蓝牙 这种方式不会弹出打开弹出框
+                isOpening = true;
                 mBleAdapter.enable();
                 if(hasStatusChangeNotificationListener()){
                     statusChangeNotificationListener.onChangeStatus(BLE_STATUS_OPEN);
@@ -902,7 +1042,6 @@ public class BleControl {
                 Log.e(TAG, "openBle: mBleAdapter is null" );
             }
         }
-        return this;
     }
 
     /**
@@ -987,9 +1126,11 @@ public class BleControl {
                                 Log.d(TAG, "onReceive: 可被发现...");
                                 break;
                             case BluetoothAdapter.STATE_TURNING_ON:
+                                isOpening = true;
                                 Log.d(TAG, "onReceive: 正在打开蓝牙。。");
                                 break;
                             case BluetoothAdapter.STATE_ON:
+                                isOpening = false;
                                 Log.d(TAG, "onReceive: 蓝牙打开");
                                 if(hasStatusChangeNotificationListener()){
                                     statusChangeNotificationListener.onChangeStatus(BLE_STATUS_OPEN);

@@ -27,6 +27,7 @@ public class DateUtils  {
 
     //时间格式
     public final static String DATE_FORMAT_ALL = "yyyy-MM-dd HH:mm:ss";
+    public final static String DATE_FORMAT_HMS = "HH:mm:ss";
     public final static String DATE_FORMAT_YEAR_MONTH_DAY = "yyyy-MM-dd";
     public final static String DATA_FORMAT_YEAR_MONTH_DAY2 = "yyyy年MM月dd日";
     public final static String DATA_FORMAT_YEAR = "yyyy";
@@ -157,7 +158,7 @@ public class DateUtils  {
     public static long strTolong(String time){
         try {
             DateFormat dateFormat = DateFormat.getDateInstance();
-            Date date = new Date(time);
+            Date date = dateFormat.parse(time);
             return date.getTime();
         }catch (Exception e){
             e.printStackTrace();

@@ -1,24 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.vincent.julie">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--APP图标上添加和删除角标的权限-->
+    <uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
+    <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />
+
 
     <application
         android:name=".base.MyApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_app_logo"
         android:supportsRtl="true"
+        tools:replace="android:name"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".widget.welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".widget.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:label="登录"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="LoginActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".widget.register.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:label="注册"/>
+
+        <activity android:name=".widget.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:label="主页"/>
+
+        <activity android:name=".widget.reset_password.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:label="重置密码"/>
+
+        <activity android:name=".widget.help.HelpFeedBackActivity"
+            android:screenOrientation="portrait"
+            android:label="帮助和反馈"/>
+
+        <activity android:name=".widget.feedback.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:label="反馈"/>
 
         <service android:name=".service.MyNettyPushService"/>
     </application>

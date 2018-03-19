@@ -1,3 +1,72 @@
 <resources>
-    <string name="app_name">Julie</string>
+    <string name="app_name">我的智家</string>
+
+    <!--公共-->
+    <string name="common_hint_input_phone">请输入手机号码</string>
+    <string name="common_hint_input_password">请输入密码</string>
+    <string name="common_hine_input_authcode">请输入验证码</string>
+    <string name="common_text_finish">完成</string>
+
+    <!--Loading文本-->
+    <string name="loading_msg_login">正在登陆..</string>
+    <string name="loading_msg_register">正在注册..</string>
+    <string name="loading_msg_check_phone">校验中..</string>
+    <string name="loading_msg_request_authcode">请求中..</string>
+    <string name="loading_msg_request">检查更新...</string>
+
+    <!--Toast文本-->
+    <string name="toast_msg_phone_is_null">手机号码不能为空</string>
+    <string name="toast_msg_password_is_null">密码不能为空</string>
+    <string name="toast_msg_password_not_standard">密码长度为6-16位</string>
+    <string name="toast_msg_phone_length_error">手机号码长度错误</string>
+    <string name="toast_msg_service_error">服务器错误,请稍后重试</string>
+    <string name="toast_msg_login_success">登陆成功</string>
+    <string name="toast_msg_register_success">注册成功</string>
+    <string name="toast_msg_send_authcode_success">验证码已发送，请注意留意短信</string>
+    <string name="toast_msg_send_authcode_fail">验证码发送失败</string>
+    <string name="toast_msg_authcode_is_null">验证码不能为空</string>
+    <string name="toast_msg_authcode_length_error">验证码长度为6位</string>
+    <string name="toast_msg_authcode_error">验证码错误</string>
+    <string name="toast_msg_password_diff">两次密码不一致</string>
+    <string name="toast_msg_user_unregister">该手机号码尚未注册</string>
+    <string name="toast_msg_reste_password_successfully">重置密码成功</string>
+    <string name="toast_msg_app_exit_hint_msg">再按一次退出程序</string>
+
+    <string name="man_text_tab_1">信息服务</string>
+    <string name="man_text_tab_2">数据查询</string>
+    <string name="man_text_tab_3">设备管理</string>
+    <string name="man_text_tab_4">我的</string>
+
+    
+    <string name="login_text_statement">本APP为Julie版权所有</string>
+    <string name="login_text_app_desc">2018</string>
+    <string name="login_text_register">没有账号?</string>
+    <string name="login_text_forget_password">忘记密码</string>
+    <string name="login_text_action">登录</string>
+
+    <string name="register_text_authcode">验证码</string>
+    <string name="register_text_gvrp_1">注册即表明同意</string>
+    <string name="register_text_gvrp">&#60;&#60;免责条款&#62;&#62;</string>
+    <string name="register_text_action">注册</string>
+
+    <string name="reset_password_text_title">忘记密码</string>
+
+    <!--frg mine-->
+    <string name="frg_mine_text_title">我的一家</string>
+    <string name="frg_mine_text_setting">设置</string>
+    <string name="frg_mine_text_common">通用</string>
+    <string name="frg_mine_text_upgrade">版本更新</string>
+    <string name="frg_mine_text_help">帮助反馈</string>
+    <string name="frg_mine_text_exit">退出登录</string>
+
+    <!--帮助和反馈-->
+    <string name="help_feedback_text_title">帮助和反馈</string>
+    <string name="help_feedback_text_feedback">我有建议</string>
+    <string name="help_feedback_text_help">帮助</string>
+
+    <!--反馈-->
+    <string name="feedback_text_title">反馈</string>
+    <string name="feedback_text_commit">提交</string>
+    <string name="feedback_text_hint">请输入你的建议</string>
+
 </resources>

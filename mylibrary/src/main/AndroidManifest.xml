@@ -36,7 +36,12 @@
 
         <activity android:name=".activity.GuideActivity"
             android:screenOrientation="portrait"
-            android:label="引导页"/>
+            android:label="引导页">
+            <intent-filter >
+                <action android:name="GuideActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <service android:name=".util.apk_down.DownloadService"/>
 

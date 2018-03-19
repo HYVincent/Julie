@@ -1,6 +1,7 @@
 package com.vincent.mylibrary.util;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
 import com.vincent.mylibrary.R;
@@ -29,15 +30,13 @@ public class IntentUtils {
     }
 
     /**
-     * 跳转到新的Activity并配置同意的跳转动画
+     * 跳转到新的Activity并配置统一的跳转动画
      * @param activity
-     * @param c
+     * @param intent
      */
-    public static void startNewActivity(Activity activity,Class c,String params){
-        Intent intent = new Intent(activity,c);
-        intent.putExtra("params",params);
+    public static void startNewActivity(Activity activity,Intent intent){
         activity.startActivity(intent);
-//        activity.overridePendingTransition(R.anim.activity_join,R.anim.activity_exit);
+        activity.overridePendingTransition(R.anim.activity_join,R.anim.activity_exit);
     }
 
 
@@ -48,13 +47,17 @@ public class IntentUtils {
      * @param tag 目标Activity的action配置
      */
     public static void startImplicitActivity(Activity activity,String tag){
-        Intent intent = new Intent();
-        //设置intent的Action属性值
-        intent.setAction( tag);
-        //不加这行也行，因为这个值默认就是Intent.CATEGORY_DEFAULT
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        activity.startActivity( intent );
+        try {
+            Intent intent = new Intent();
+            //设置intent的Action属性值
+            intent.setAction( tag);
+            //不加这行也行，因为这个值默认就是Intent.CATEGORY_DEFAULT
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            activity.startActivity( intent );
+        }catch (ActivityNotFoundException e){
+            e.printStackTrace();
+            MyToastUtil.showMsg("没有找到目标页面");
+        }
     }
-
 }

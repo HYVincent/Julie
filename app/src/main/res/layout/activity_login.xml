@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <LinearLayout
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        android:padding="@dimen/size_1"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:background="@drawable/shape_common_bg_circle_gray"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/size_5"
+                android:src="@mipmap/common_icon_phone" />
+
+            <EditText
+                android:id="@+id/login_et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="@string/common_hint_input_phone"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingLeft="@dimen/size_5"
+                android:textColor="@color/color_gray_666666"
+                android:textColorHint="@color/color_gray_999999"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/size_15"
+            android:background="@drawable/shape_common_bg_circle_gray"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/size_20"
+                android:layout_height="@dimen/size_20"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/size_5"
+                android:src="@mipmap/common_icon_password" />
+
+            <EditText
+                android:id="@+id/login_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="@string/common_hint_input_password"
+                android:inputType="textPassword"
+                android:maxLength="11"
+                android:paddingLeft="@dimen/size_5"
+                android:textColor="@color/color_gray_666666"
+                android:textColorHint="@color/color_gray_999999"
+                android:textSize="@dimen/text_size_14sp" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/size_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.vincent.mylibrary.more_language.AppTextView
+                android:id="@+id/login_tv_register"
+                android:textColor="@color/color_blue_63d8ff"
+                android:padding="@dimen/size_5"
+                android:textSize="@dimen/text_size_12sp"
+                android:text="@string/login_text_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.vincent.mylibrary.more_language.AppTextView
+                android:id="@+id/login_tv_reset_password"
+                android:padding="@dimen/size_5"
+                android:textSize="@dimen/text_size_12sp"
+                android:layout_alignParentRight="true"
+                android:text="@string/login_text_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <com.vincent.mylibrary.more_language.AppButton
+            android:id="@+id/login_btn_action"
+            android:textSize="@dimen/text_size_18sp"
+            android:background="@drawable/shape_common_bg_circle_blue_fill"
+            android:textColor="@color/color_white_ffffff"
+            android:text="@string/login_text_action"
+            android:layout_marginTop="@dimen/size_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <com.vincent.mylibrary.more_language.AppTextView
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/color_blue_63d8ff"
+        android:text="@string/login_text_statement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
+
+    <com.vincent.mylibrary.more_language.AppTextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/login_text_app_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
+
+
+</android.support.constraint.ConstraintLayout>

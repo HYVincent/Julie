@@ -28,7 +28,7 @@ public class NotificationUtil {
      * @param msg 消息
      * @param activity 点击通知需要跳转的Activity，Activity需要完整路径，包含包名
      */
-    public static void sendNotification(Context context, String activity, int imgId, String title, String msg) {
+    public static void sendNotification(Context context, String activity, int imgId, String title, String msg,boolean clickVanish) {
         try {
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
@@ -44,11 +44,56 @@ public class NotificationUtil {
                     .setContentIntent(pendingIntent);
             Notification mNotification = mBuilder.build();
             mNotification.iconLevel=imgId;
-            //在通知栏上点击此通知后自动清除此通知
-            mNotification.flags = Notification.FLAG_ONGOING_EVENT;//FLAG_ONGOING_EVENT 在顶部常驻，可以调用下面的清除方法去除  FLAG_AUTO_CANCEL  点击和清理可以去调
-            mNotification.flags = Notification.COLOR_DEFAULT;
             mNotification.defaults = Notification.DEFAULT_SOUND;//声音效果，不震动
-            mNotification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+            if(clickVanish){
+                //点击不消失
+                mNotification.flags = Notification.FLAG_ONGOING_EVENT;//FLAG_ONGOING_EVENT 在顶部常驻，可以调用下面的清除方法去除  FLAG_AUTO_CANCEL  点击和清理可以去调
+                mNotification.flags = Notification.COLOR_DEFAULT;
+                mNotification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+            }
+            //设置发出消息的内容
+            mNotification.tickerText = "您有新的消息";//通知产生的时候发出的内容
+            //设置发出通知的时间
+            mNotification.when = System.currentTimeMillis();
+            mNotificationManager.notify((int) System.currentTimeMillis(),mNotification);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 发送通知提示
+     * @param context 上下文
+     * @param imgId 通知栏显示的图标id
+     * @param title 通知title
+     * @param msg 消息
+     * @param activityClass 点击通知需要跳转的Activity的class
+     * @param clickVanish true 点击消失 false 点击不消失
+     */
+    public static void sendNotification(Context context, Class activityClass, int imgId, String title, String msg) {
+        try {
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+            Intent resultIntent = new Intent(context, activityClass);
+            resultIntent.putExtra("title",title);
+            resultIntent.putExtra("msg",msg);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(pendingIntent);
+            mBuilder.setSmallIcon(imgId)
+                    .setTicker("您有新的消息")
+                    .setContentTitle(title)//通知的标题
+                    .setContentText(msg)//显示在界面上的内容
+                    .setContentIntent(pendingIntent);
+            mBuilder.setAutoCancel(true);
+            Notification mNotification = mBuilder.build();
+            mNotification.iconLevel=imgId;
+            mNotification.defaults = Notification.DEFAULT_SOUND;//声音效果，不震动
+            /*if(clickVanish){
+                //点击不消失
+                mNotification.flags = Notification.FLAG_ONGOING_EVENT;//FLAG_ONGOING_EVENT 在顶部常驻，可以调用下面的清除方法去除  FLAG_AUTO_CANCEL  点击和清理可以去调
+                mNotification.flags = Notification.COLOR_DEFAULT;
+                mNotification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
+            }*/
             //设置发出消息的内容
             mNotification.tickerText = "您有新的消息";//通知产生的时候发出的内容
             //设置发出通知的时间

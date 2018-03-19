@@ -1,15 +1,26 @@
 package com.vincent.mylibrary.util;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.vincent.mylibrary.MyLibrary;
+import com.vincent.mylibrary.entity.EventMsg;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -25,6 +36,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Administrator QQ:1032006226
@@ -37,26 +49,28 @@ import java.util.List;
 
 public class SystemUtil {
 
-    private static final String TAG=SystemUtil.class.getSimpleName();
+    private static final String TAG = SystemUtil.class.getSimpleName();
 
 
     /**
      * 获取手机型号
      * @return
      */
-    public static String getPhoneMdel(){
-        String s= Build.MODEL;
+    public static String getPhoneMdel() {
+        String s = Build.MODEL;
         return s;
 
     }
+
     /**
      * 获取手机厂商
      * @return
      */
-    public static String getPhoneManufacturer(){
-        String phoneManufacturer= Build.MANUFACTURER;
+    public static String getPhoneManufacturer() {
+        String phoneManufacturer = Build.MANUFACTURER;
         return phoneManufacturer;
     }
+
     /**
      * 返回系统版本号
      * @return
@@ -66,17 +80,18 @@ public class SystemUtil {
         try {
             version = Integer.parseInt(Build.VERSION.SDK);
         } catch (NumberFormatException e) {
-            Log.d(TAG, "getAndroidSDKVersion: "+e.toString());
+            Log.d(TAG, "getAndroidSDKVersion: " + e.toString());
         }
         return version;
     }
+
     /**
      * 获取手机的IMEI号码
      * @param context
      * @return
      */
-    public static String getIMEINumber(Context context){
-        String imei =((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+    public static String getIMEINumber(Context context) {
+        @SuppressLint("MissingPermission") String imei = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
         Log.d(TAG, "getIMEINumber: imei-->"+imei);
 //        不过纯APP开发SystemProperties，TelephonyProperties汇报错误，因为android.os.SystemProperties在SDK的库中是没有的，
 //        需要把Android SDK 目录下data下的layoutlib.jar文件加到当前工程的附加库路径中，就可以Import。
@@ -378,6 +393,43 @@ public class SystemUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * 改变当前语言
+     * @param locale
+     */
+    public static void changeLanguage(Context mContext,Locale locale) {
+        Resources resources = mContext.getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        // 应用用户选择语言
+        config.locale = locale;
+        resources.updateConfiguration(config, dm);
+    }
+    /**
+     * 设置当前语言
+     *
+     * @param language
+     */
+    public static void setAppLanguage(Context mContext,String language) {
+        //获取当前资源对象
+        Resources resources = mContext.getResources();
+        //获取设置对象
+        Configuration configuration = resources.getConfiguration();
+        //获取屏幕参数
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        //设置本地语言
+        switch (language) {
+            case "zh":
+                configuration.locale = new Locale("zh");
+                break;
+            case "en":
+                configuration.locale = new Locale("en");
+                break;
+         default:break;
+        }
+        resources.updateConfiguration(configuration, displayMetrics);
     }
 
 

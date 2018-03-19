@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_48"
+    android:background="@color/color_blue_63d8ff"
+    tools:layout_editor_absoluteY="25dp">
+
+
+    <LinearLayout
+        android:id="@+id/root_ll_left"
+        android:layout_width="46dp"
+        android:layout_height="49dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/size_18"
+            android:layout_height="@dimen/size_18"
+            android:src="@mipmap/common_icon_arrow_left" />
+
+    </LinearLayout>
+
+    <com.vincent.mylibrary.more_language.AppTextView
+        android:id="@+id/include_layout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_white_ffffff"
+        android:textSize="@dimen/text_size_18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/include_layout_right_ll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/root_ll_left"
+        app:layout_constraintTop_toTopOf="@+id/include_layout_right_ll" />
+
+    <LinearLayout
+        android:id="@+id/include_layout_right_ll"
+        android:layout_width="@dimen/size_49"
+        android:layout_height="49dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/include_layout_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.vincent.mylibrary.more_language.AppTextView
+            android:id="@+id/include_layout_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_white_ffffff" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

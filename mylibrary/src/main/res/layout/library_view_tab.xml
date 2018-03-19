@@ -12,12 +12,12 @@
         android:layout_width="@dimen/size_20"
         android:layout_height="@dimen/size_20" />
 
-    <TextView
+    <com.vincent.mylibrary.more_language.AppTextView
         android:id="@+id/custom_tab_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="@dimen/size_3"
         android:textColor="@color/color_gray_9fa1a9"
-        android:textSize="@dimen/text_size_9sp" />
+        android:textSize="@dimen/text_size_12sp" />
 </LinearLayout>

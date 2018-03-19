@@ -3,7 +3,7 @@ package com.vincent.julie.netty;
 import android.util.Log;
 
 import com.vincent.julie.base.MyApp;
-import com.vincent.julie.netty.msg.Constants;
+import com.vincent.julie.netty.msg.BaseMsg;
 import com.vincent.julie.netty.msg.LoginMsg;
 import com.vincent.julie.netty.msg.PingMsg;
 import com.vincent.julie.netty.msg.PushMsg;
@@ -48,12 +48,11 @@ public class NettyClientBootstrap {
         if (socketChannel!=null && socketChannel.isOpen()) {
             System.out.println("已经连接");
         }else {
-            Constants.setPhoneNum(MyApp.getUser().user_phone);
             System.out.println("长链接开始");
             if (start()) {
                 LoginMsg loginMsg = new LoginMsg();
-                loginMsg.setUserName(MyApp.getUser().user_name);
-                loginMsg.setPhoneNum(MyApp.getUser().user_phone);
+                loginMsg.setUserName(MyApp.user.getUser_name());
+                loginMsg.setPhoneNum(MyApp.user.getUser_phone());
                 socketChannel.writeAndFlush(loginMsg);
                 System.out.println("长链接成功");
             }else {
@@ -91,15 +90,16 @@ public class NettyClientBootstrap {
             future = bootstrap.connect(new InetSocketAddress(host, port)).sync();
             if (future.isSuccess()) {
                 socketChannel = (SocketChannel) future.channel();
-                System.out.println("connect server  成功---------");
+                Log.d(TAG, "start: connect server successfully!");
                 return true;
             } else {
-                System.out.println("connect server  失败---------");
+                Log.d(TAG, "start: connect server fail!");
                 startNetty();
                 return false;
             }
         } catch (Exception e) {
-            System.out.println("无法连接----------------");
+            e.printStackTrace();
+            Log.d(TAG, "start: connect exception.");
             return false;
         }
     }
@@ -130,7 +130,7 @@ public class NettyClientBootstrap {
      * 发送消息
      * @param pushMsg
      */
-    public  void sendMsg(PushMsg pushMsg){
+    public  void sendMsg(BaseMsg pushMsg){
         if(socketChannel!=null){
             socketChannel.writeAndFlush(pushMsg);
         }else {

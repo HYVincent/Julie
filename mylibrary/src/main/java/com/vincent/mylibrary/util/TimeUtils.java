@@ -1,5 +1,6 @@
 package com.vincent.mylibrary.util;
 
+import android.os.CountDownTimer;
 import android.os.Message;
 import android.util.Log;
 
@@ -99,6 +100,51 @@ public class TimeUtils {
 
     public interface TimerListener{
         void  doAction();
+    }
+
+
+    private static CountDownTimer countDownTimer;
+
+    /**
+     * 倒计时
+     * @param allTimes s
+     */
+    public static void countDownUtils(int allTimes,final CountDownListener countDownListener){
+        countDownUtils(allTimes,1000,countDownListener);
+    }
+
+    /**
+     * 倒计时 注意 如果异常会导致中断计时 但是如果捕获异常的话就不会影响计时
+     * @param allTimes 总的时间 单位 s
+     * @param interval 间隔时间 一般为1000
+     */
+    public static void countDownUtils(int allTimes,int interval,final CountDownListener countDownListener){
+        countDownTimer = new CountDownTimer(allTimes * 1000,interval) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countDownListener.onTick(millisUntilFinished);
+            }
+
+            @Override
+            public void onFinish() {
+                countDownListener.onFinish();
+            }
+        };
+        countDownTimer.start();
+    }
+
+    public static void cancelCountDown(){
+        if(countDownTimer != null){
+            countDownTimer.cancel();
+        }
+    }
+
+    public interface CountDownListener{
+
+        void onTick(long millisUntilFinished);
+
+        void onFinish();
+
     }
 
 }

@@ -49,7 +49,7 @@ public class ThreadPoolManager {
      * 执行任务
      */
     public void execute(Runnable runnable){
-        if(runnable==null)return;
+        if(runnable==null){return;}
 
         executor.execute(runnable);
     }

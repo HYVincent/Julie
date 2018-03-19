@@ -102,6 +102,7 @@ public class BaseDialog extends Dialog {
 
     @Override
     public void show() {
+        initParams();
         super.show();
     }
 
