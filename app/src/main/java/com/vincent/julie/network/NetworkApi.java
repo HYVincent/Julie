@@ -74,7 +74,8 @@ public interface NetworkApi {
     @Keep
     @GET("version/checkNewVersion")
     Observable<ResponseEntity> checkNewVersion(
-            @Query("version")String version
+            @Query("version")int version
     );
+
 
 }

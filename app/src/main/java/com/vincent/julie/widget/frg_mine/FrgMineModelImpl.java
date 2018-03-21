@@ -19,7 +19,7 @@ import com.vincent.julie.network.NovateUtils;
 
 public class FrgMineModelImpl implements IFrgMineModel {
     @Override
-    public void checkAppUpgrade(Context mContext, String version, final INetworkResponseListener iNetworkResponseListener) {
+    public void checkAppUpgrade(Context mContext, int version, final INetworkResponseListener iNetworkResponseListener) {
         NovateUtils.getNovate().call(NovateUtils.getMyApi().checkNewVersion(version), new MySubscriber<ResponseEntity>(mContext) {
             @Override
             public void onError(Throwable e) {

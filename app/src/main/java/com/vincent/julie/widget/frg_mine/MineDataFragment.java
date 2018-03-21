@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.vincent.julie.BuildConfig;
 import com.vincent.julie.R;
 import com.vincent.julie.base.BaseFragment;
 import com.vincent.julie.bean.VersionBean;
@@ -98,8 +99,8 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView{
                         .show();
                 break;
             case R.id.frg_mine_rl_app_upgrade:
-                presenter.checkAppUpgrade(getContext(), Build.VERSION.CODENAME);
-                Log.d("版本号", "onViewClicked: "+Build.VERSION.CODENAME);
+                presenter.checkAppUpgrade(getContext(), BuildConfig.VERSION_CODE);
+                Log.d("版本号", "onViewClicked: "+BuildConfig.VERSION_CODE);
                 break;
             default:break;
         }

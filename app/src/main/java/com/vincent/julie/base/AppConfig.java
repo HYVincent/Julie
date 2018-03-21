@@ -16,7 +16,8 @@ public class AppConfig {
      * 如果是本地Tomcat启动的服务器地址则为:127.0.0.1
      */
 //    public static final String SERVICE_ADDRESS = "http://192.168.3.3:8080/MyWeb/";
-    public static final String SERVICE_ADDRESS = "http:123.207.47.61:8080/MyWeb/";
+//    public static final String SERVICE_ADDRESS = "http:123.207.47.61:8080/MyWeb/";
+        public static final String SERVICE_ADDRESS = "http://192.168.0.109:8080/MyWeb/";
     /**
      * 服务器文件地址  例如apk版本 http://123.207.47.61:8080/Julie/Apk/zhijia_10000.apk
      */

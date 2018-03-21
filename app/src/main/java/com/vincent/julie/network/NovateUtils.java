@@ -1,13 +1,20 @@
 package com.vincent.julie.network;
 
+import android.util.Log;
+
 import com.tamic.novate.Novate;
 import com.vincent.julie.base.AppConfig;
 import com.vincent.mylibrary.MyLibrary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -35,6 +42,8 @@ public class NovateUtils {
     private static final int NETWORK_READ_TIME_OUT = 10 * 1000;
     private static final int NETWORK_WRITE_TIME_OUT = 10 * 1000;
 //    private static final String NETWORK_BASE_URL = "http://mp.toncentsoft.com:8089/StarCare-app/";
+    private static final String TAG = NovateUtils.class.getSimpleName();
+    private static HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
 
     public static String getToken(){
         return headers.get("API_TOKEN");
@@ -63,19 +72,44 @@ public class NovateUtils {
     }
 
     public static OkHttpClient getOkHttpClient() {
-        if(builder == null){
+//        if(builder == null){
+            Log.d(TAG, "getOkHttpClient: 创建OkHttpClient.Builder()");
             builder = new OkHttpClient.Builder()
                     .addInterceptor(new Interceptor() {
                         @Override
                         public Response intercept(Chain chain) throws IOException {
+                            Log.d(TAG, "intercept: 添加请求头API_TOKEN"+NovateUtils.getToken());
                             Request newRequest = chain.request().newBuilder()
-//                                    .addHeader("token",NovateUtils.getToken())
+                                    .addHeader("API_TOKEN",NovateUtils.getToken())
                                     .addHeader("Accept-Encoding", "identity")
                                     .build();
                             return chain.proceed(newRequest);
                         }
                     });
-        }
+
+            builder.cookieJar(new CookieJar() {
+
+                @Override
+                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+//                    保存Cookies到List
+                    Log.d(TAG, "saveFromResponse: 保存Cookies到List");
+                    cookieStore.put(url.host(), cookies);
+                }
+
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl url) {
+                    Log.d(TAG, "loadForRequest: 正在加载URL:"+url);
+                   /* List<Cookie> cookies = cookieStore.get(url.host());
+                    return cookies != null ? cookies : new ArrayList<Cookie>();*/
+                    List<Cookie> cookies = cookieStore.get(HttpUrl.parse(AppConfig.SERVICE_ADDRESS));
+                    if(cookies==null){
+                        System.out.println("没加载到cookie");
+                    }
+                    return cookies != null ? cookies : new ArrayList<Cookie>();
+                }
+            });
+
+//        }
         return builder.build();
     }
 
@@ -84,7 +118,7 @@ public class NovateUtils {
      * @return
      */
     public static Novate getNovate(){
-        if(novate == null){
+//        if(novate == null){
             novate = new Novate.Builder(MyLibrary.getmContext())
                     .client(getOkHttpClient())
                     .connectTimeout(NETWORK_CONNECT_TIME_OUT)
@@ -93,10 +127,10 @@ public class NovateUtils {
                     .baseUrl(AppConfig.SERVICE_ADDRESS)
                     .addInterceptor(new MyNetworkInterceptor())
                     .addHeader(headers)
-                    .addCache(false)
+                    .addCache(true)
                     .addLog(true)
                     .build();
-        }
+//        }
         return novate;
     }
 

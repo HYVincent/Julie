@@ -4,13 +4,18 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.elvishew.xlog.XLog;
 import com.vincent.julie.bean.ResponseEntity;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.List;
 
+import okhttp3.Headers;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -67,6 +72,7 @@ public class MyNetworkInterceptor implements Interceptor {
             }
             e.printStackTrace();
         }
+//        request.
         //注意如果这里不继续传递回去，接口将收不到数据
         return response.newBuilder()
                 .body(ResponseBody.create(mediaType, strResponse))

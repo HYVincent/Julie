@@ -1,13 +1,19 @@
 package com.vincent.julie.widget.login;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.tamic.novate.Throwable;
+import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.bean.INetworkResponseListener;
 import com.vincent.julie.bean.ResponseEntity;
 import com.vincent.julie.network.MySubscriber;
 import com.vincent.julie.network.NovateUtils;
+
+import cn.hadcn.davinci.DaVinci;
+import cn.hadcn.davinci.http.OnDaVinciRequestListener;
 
 /**
  * @author Administrator QQ:1032006226
@@ -33,6 +39,25 @@ public class LoginModelImpl implements ILoginModel {
     public void login(final Context mContext, String phone, String password,
                       final INetworkResponseListener iNetworkResponseListener) {
         count ++;
+       /* DaVinci.with(mContext).enableCookie();
+        String fullUrl = AppConfig.SERVICE_ADDRESS+"user/login?user_phone="+phone+"&user_password="+password;
+        DaVinci.with(mContext).getHttpRequest().doPost(fullUrl, new OnDaVinciRequestListener() {
+            @Override
+            public void onDaVinciRequestSuccess(String s) {
+                if(TextUtils.isEmpty(s)){
+                    iNetworkResponseListener.responseIsNull();
+                }else {
+                    iNetworkResponseListener.responseResult(JSON.parseObject(s,ResponseEntity.class));
+                }
+            }
+
+            @Override
+            public void onDaVinciRequestFailed(String s) {
+                Log.d("登录错误", "onDaVinciRequestFailed: error-->"+s);
+                iNetworkResponseListener.responseError(null);
+            }
+        });*/
+
         Log.d("请求次数", "login: "+count);
         NovateUtils.getNovate().call(NovateUtils.getMyApi().login(
                 phone,

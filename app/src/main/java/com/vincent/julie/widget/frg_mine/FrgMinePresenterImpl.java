@@ -29,7 +29,7 @@ public class FrgMinePresenterImpl implements IFrgMinePresenter {
     }
 
     @Override
-    public void checkAppUpgrade(Context mContext, final String version) {
+    public void checkAppUpgrade(Context mContext, final int version) {
         view.showLoadingDialog(mContext.getString(R.string.loading_msg_request));
         mineModel.checkAppUpgrade(mContext, version, new INetworkResponseListener() {
             @Override

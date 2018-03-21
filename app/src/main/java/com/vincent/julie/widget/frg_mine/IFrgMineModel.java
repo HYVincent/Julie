@@ -15,6 +15,6 @@ import com.vincent.julie.bean.INetworkResponseListener;
 
 public interface IFrgMineModel {
 
-    void checkAppUpgrade(Context mContext, String version, INetworkResponseListener iNetworkResponseListener);
+    void checkAppUpgrade(Context mContext, int version, INetworkResponseListener iNetworkResponseListener);
 
 }

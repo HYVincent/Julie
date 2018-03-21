@@ -8,6 +8,7 @@ buildscript {
         maven {
             url "http://mvn.mob.com/android"
         }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
