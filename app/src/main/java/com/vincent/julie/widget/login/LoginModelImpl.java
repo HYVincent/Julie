@@ -12,8 +12,6 @@ import com.vincent.julie.bean.ResponseEntity;
 import com.vincent.julie.network.MySubscriber;
 import com.vincent.julie.network.NovateUtils;
 
-import cn.hadcn.davinci.DaVinci;
-import cn.hadcn.davinci.http.OnDaVinciRequestListener;
 
 /**
  * @author Administrator QQ:1032006226
@@ -26,7 +24,7 @@ import cn.hadcn.davinci.http.OnDaVinciRequestListener;
 
 public class LoginModelImpl implements ILoginModel {
 
-    private int count = 0;
+
 
     /**
      * 登录接口
@@ -38,27 +36,7 @@ public class LoginModelImpl implements ILoginModel {
     @Override
     public void login(final Context mContext, String phone, String password,
                       final INetworkResponseListener iNetworkResponseListener) {
-        count ++;
-       /* DaVinci.with(mContext).enableCookie();
-        String fullUrl = AppConfig.SERVICE_ADDRESS+"user/login?user_phone="+phone+"&user_password="+password;
-        DaVinci.with(mContext).getHttpRequest().doPost(fullUrl, new OnDaVinciRequestListener() {
-            @Override
-            public void onDaVinciRequestSuccess(String s) {
-                if(TextUtils.isEmpty(s)){
-                    iNetworkResponseListener.responseIsNull();
-                }else {
-                    iNetworkResponseListener.responseResult(JSON.parseObject(s,ResponseEntity.class));
-                }
-            }
 
-            @Override
-            public void onDaVinciRequestFailed(String s) {
-                Log.d("登录错误", "onDaVinciRequestFailed: error-->"+s);
-                iNetworkResponseListener.responseError(null);
-            }
-        });*/
-
-        Log.d("请求次数", "login: "+count);
         NovateUtils.getNovate().call(NovateUtils.getMyApi().login(
                 phone,
                 password),

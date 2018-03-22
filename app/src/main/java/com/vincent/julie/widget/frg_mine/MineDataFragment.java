@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationListener;
 import com.vincent.julie.BuildConfig;
 import com.vincent.julie.R;
 import com.vincent.julie.base.BaseFragment;
@@ -33,7 +36,7 @@ import butterknife.Unbinder;
  */
 
 public class MineDataFragment extends BaseFragment implements IFrgMineView{
-
+    private static final String TAG = MineDataFragment.class.getSimpleName();
     @BindView(R.id.frg_mine_rl_setting)
     RelativeLayout frgMineRlSetting;
     @BindView(R.id.frg_mine_rl_common)
@@ -47,7 +50,9 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView{
     Unbinder unbinder;
     private View view;
 
+
     private IFrgMinePresenter presenter;
+
 
     @Nullable
     @Override
@@ -59,6 +64,8 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView{
         presenter = new FrgMinePresenterImpl(this);
         return view;
     }
+
+
 
     @Override
     public boolean onBackPressed() {

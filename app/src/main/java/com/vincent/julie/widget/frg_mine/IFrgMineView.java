@@ -20,4 +20,6 @@ public interface IFrgMineView extends IBaseView {
      */
     void newVersion(VersionBean versionBean);
 
+
+
 }

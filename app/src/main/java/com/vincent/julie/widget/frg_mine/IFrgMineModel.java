@@ -3,6 +3,7 @@ package com.vincent.julie.widget.frg_mine;
 import android.content.Context;
 
 import com.vincent.julie.bean.INetworkResponseListener;
+import com.vincent.julie.bean.INetworkResponseStringListener;
 
 /**
  * @author Administrator QQ:1032006226
@@ -16,5 +17,6 @@ import com.vincent.julie.bean.INetworkResponseListener;
 public interface IFrgMineModel {
 
     void checkAppUpgrade(Context mContext, int version, INetworkResponseListener iNetworkResponseListener);
+
 
 }

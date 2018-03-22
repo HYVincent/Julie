@@ -7,6 +7,9 @@
     <string name="common_hine_input_authcode">请输入验证码</string>
     <string name="common_text_finish">完成</string>
 
+    <!--权限获取-->
+    <string name="request_permission_location">获取位置信息需要位置权限</string>
+
     <!--Loading文本-->
     <string name="loading_msg_login">正在登陆..</string>
     <string name="loading_msg_register">正在注册..</string>
