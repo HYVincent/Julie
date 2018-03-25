@@ -34,9 +34,10 @@
     <string name="toast_msg_user_unregister">该手机号码尚未注册</string>
     <string name="toast_msg_reste_password_successfully">重置密码成功</string>
     <string name="toast_msg_app_exit_hint_msg">再按一次退出程序</string>
+    <string name="toast_msg_permission_fail">权限获取失败,无法下载升级文件</string>
 
-    <string name="man_text_tab_1">信息服务</string>
-    <string name="man_text_tab_2">数据查询</string>
+    <string name="man_text_tab_1">首页</string>
+    <string name="man_text_tab_2">房间</string>
     <string name="man_text_tab_3">设备管理</string>
     <string name="man_text_tab_4">我的</string>
 
@@ -46,6 +47,7 @@
     <string name="login_text_register">没有账号?</string>
     <string name="login_text_forget_password">忘记密码</string>
     <string name="login_text_action">登录</string>
+    <string name="login_text_title">我的易家</string>
 
     <string name="register_text_authcode">验证码</string>
     <string name="register_text_gvrp_1">注册即表明同意</string>
@@ -54,13 +56,47 @@
 
     <string name="reset_password_text_title">忘记密码</string>
 
+    <!--设备管理-->
+    <string name="frg_device_manager_title">所有设备</string>
+
     <!--frg mine-->
     <string name="frg_mine_text_title">我的一家</string>
     <string name="frg_mine_text_setting">设置</string>
     <string name="frg_mine_text_common">通用</string>
     <string name="frg_mine_text_upgrade">版本更新</string>
+    <string name="frg_mine_text_new_upgrade">New</string>
     <string name="frg_mine_text_help">帮助反馈</string>
     <string name="frg_mine_text_exit">退出登录</string>
+
+    <string name="frg_mine_text_account">账号:</string>
+    <string name="frg_mine_text_system_msg">系统消息</string>
+    
+    <!--frg_main-->
+    <string name="frg_main_text_scene">场景</string>
+    <string name="frg_main_text_data">数据</string>
+    <string name="frg_main_text_info">信息</string>
+    <string name="frg_main_text_unkown_city">未知</string>
+    
+    <!--frg_scene-->
+    <string name="frg_scene_text_quick">快捷场景</string>
+
+    <!--frg_room-->
+    <string name="frg_room_text_tag">请输入房间名称</string>
+    <string name="frg_room_text_tag_not_null">房间名称不能为空</string>
+
+    <!--empty_view-->
+    <string name="empty_view_null_data">暂无数据</string>
+
+    <!--frg_data-->
+    <string name="frg_data_text_electro">家庭用电</string>
+    <string name="frg_data_text_environmental_parameter">环境参数</string>
+    <string name="frg_data_text_security_alarm">安防报警</string>
+    
+    <!--frg_info-->
+    <string name="frg_info_text_weather">天气情况</string>
+    <string name="frg_info_text_notify">物业通知</string>
+    <string name="frg_info_text_emergency_num">紧急号码</string>
+
 
     <!--帮助和反馈-->
     <string name="help_feedback_text_title">帮助和反馈</string>
@@ -71,5 +107,18 @@
     <string name="feedback_text_title">反馈</string>
     <string name="feedback_text_commit">提交</string>
     <string name="feedback_text_hint">请输入你的建议</string>
+
+    <!--添加设备-->
+    <string name="add_device_text_title">添加只能设备</string>
+    <string name="add_device_text_type">请选择设备类型</string>
+    <string name="add_device_text_location">请选择设备位置</string>
+
+    <!--设置-->
+    <string name="setting_text_upgrade">设备升级</string>
+    <string name="setting_text_title">设置</string>
+
+    <!--系统消息-->
+    <string name="system_msg_text_title">系统消息</string>
+
 
 </resources>

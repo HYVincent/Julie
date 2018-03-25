@@ -1,0 +1,87 @@
+package com.vincent.julie.widget.frg_main.scene;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.vincent.julie.R;
+import com.vincent.julie.adapter.SceneAdapter;
+import com.vincent.julie.base.BaseFragment;
+import com.vincent.julie.bean.SceneBean;
+import com.vincent.mylibrary.view.SpaceItemDecoration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+/**
+ * @author Administrator QQ:1032006226
+ * @version v1.0
+ * @name Julie
+ * @page com.vincent.julie.widget.frg_main.data
+ * @class describe
+ * @date 2018/3/25 20:36
+ */
+
+public class SceneFragment extends BaseFragment implements ISceneView {
+
+    @BindView(R.id.rlv_secne_list)
+    RecyclerView recycleView;
+    Unbinder unbinder;
+    private View view;
+
+    private List<SceneBean> data = new ArrayList<>();
+    private SceneAdapter adapter;
+    private IScenePresenter presenter;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (view == null) {
+            view = inflater.inflate(R.layout.frg_layout_secne, container, false);
+        }
+        unbinder = ButterKnife.bind(this, view);
+        initRecycleView();
+        presenter = new ScenePresenterImpl(this);
+        presenter.initSceneData();
+        return view;
+    }
+
+    private void initRecycleView() {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        recycleView.setLayoutManager(gridLayoutManager);
+        adapter = new SceneAdapter(getContext());
+        adapter.setData(data);
+        recycleView.setAdapter(adapter);
+        recycleView.addItemDecoration(new SpaceItemDecoration(10));
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void loadFail() {
+
+    }
+
+    @Override
+    public void refreshScene(List<SceneBean> data) {
+        adapter.setData(data);
+    }
+}

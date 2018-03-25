@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_background_white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:textColor="@color/color_blue_07aef5"
+        android:text="发现新版本"
+        android:id="@+id/dialog_upgrade_tv_title"
+        android:layout_marginTop="@dimen/size_20"
+        android:textSize="@dimen/text_size_18sp"
+        android:layout_marginLeft="@dimen/size_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="@dimen/size_15"
+        android:id="@+id/dialog_upgrade_tv_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dialog_upgrade_tv_action"
+            android:paddingBottom="@dimen/size_10"
+            android:paddingTop="@dimen/size_10"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_16sp"
+            android:text="升级"
+            android:textColor="@color/color_blue_07aef5"
+            android:layout_weight="1"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="wrap_content" />
+
+
+        <View
+            android:id="@+id/dialog_upgrade_v_line"
+            android:layout_width="@dimen/size_1"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_line_imaginary_line_yellow"/>
+
+
+        <TextView
+            android:id="@+id/dialog_upgrade_tv_cancel"
+            android:paddingBottom="@dimen/size_10"
+            android:paddingTop="@dimen/size_10"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_16sp"
+            android:text="暂时不用"
+            android:layout_weight="1"
+            android:layout_width="@dimen/size_0"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

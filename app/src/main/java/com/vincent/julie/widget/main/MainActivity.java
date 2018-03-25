@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.vincent.julie.R;
 import com.vincent.julie.base.BackHandledInterface;
@@ -14,8 +15,8 @@ import com.vincent.julie.base.BaseActivity;
 import com.vincent.julie.base.BaseFragment;
 import com.vincent.julie.service.MyNettyPushService;
 import com.vincent.julie.widget.frg_device_manager.DeviceManagerFragment;
-import com.vincent.julie.widget.frg_info_service.MainFragment;
-import com.vincent.julie.widget.frg_data_query.DataQueryFragment;
+import com.vincent.julie.widget.frg_rom.RomFragment;
+import com.vincent.julie.widget.frg_main.MainFragment;
 import com.vincent.julie.widget.frg_mine.MineDataFragment;
 import com.vincent.mylibrary.util.ActivityUtils;
 import com.vincent.mylibrary.util.ExitAppUtils;
@@ -24,13 +25,16 @@ import com.vincent.mylibrary.view.CustomTabView;
 public class MainActivity extends BaseActivity implements BackHandledInterface,CustomTabView.OnTabCheckListener{
 
     private Fragment currentFragment, fragment1,fragment2,fragment3,fragment4;
-    private  CustomTabView.Tab tab1, tab2, tab3,tab4;
+    private  CustomTabView.Tab tab1, tab2, tab3,tab4,tabCenter;
     private CustomTabView mainCtButtomMenu;
+    private ImageView ivVoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ivVoice = findViewById(R.id.main_iv_voice);
+        ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
         initButtomTab();
         initButtomView();
     }
@@ -56,11 +60,20 @@ public class MainActivity extends BaseActivity implements BackHandledInterface,C
                 .setPressedIcon(R.mipmap.main_icon_data_query_select);
         mainCtButtomMenu.addTab(tab2);
 
+        tabCenter = new CustomTabView.Tab().setText(null)
+//                .setColor(ContextCompat.getColor(MainActivity.this,R.color.color_gray_999999))
+//                .setCheckedColor(ContextCompat.getColor(MainActivity.this,R.color.color_blue_07aef5))
+//                .setNormalIcon(R.mipmap.main_icon_voice_default)
+//                .setPressedIcon(R.mipmap.main_icon_voice);
+        ;
+        mainCtButtomMenu.addTab(tabCenter);
+
         tab3 = new CustomTabView.Tab().setText(getString(R.string.man_text_tab_3))
                 .setColor(ContextCompat.getColor(MainActivity.this,R.color.color_gray_999999))
                 .setCheckedColor(ContextCompat.getColor(MainActivity.this,R.color.color_blue_07aef5))
                 .setNormalIcon(R.mipmap.main_icon_device_manager_default)
                 .setPressedIcon(R.mipmap.main_icon_device_manager_select);
+
         mainCtButtomMenu.addTab(tab3);
 
         tab4= new CustomTabView.Tab().setText(getString(R.string.man_text_tab_4))
@@ -124,30 +137,39 @@ public class MainActivity extends BaseActivity implements BackHandledInterface,C
     public void onTabSelected(View v, int position) {
         switch (position){
             case 0:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
                 if(fragment1 == null){
                     fragment1 = new MainFragment();
                 }
                 addOrShowFragment(getSupportFragmentManager().beginTransaction(), fragment1,MainFragment.class.getSimpleName());
                 break;
             case 1:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
                 if(fragment2 == null){
-                    fragment2 = new DataQueryFragment();
+                    fragment2 = new RomFragment();
                 }
-                addOrShowFragment(getSupportFragmentManager().beginTransaction(),fragment2,DataQueryFragment.class.getSimpleName());
+                addOrShowFragment(getSupportFragmentManager().beginTransaction(),fragment2,RomFragment.class.getSimpleName());
                 break;
             case 2:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice));
+                toastMsg("语音");
+                break;
+            case 3:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
                 if(fragment3 == null){
                     fragment3 = new DeviceManagerFragment();
                 }
                 addOrShowFragment(getSupportFragmentManager().beginTransaction(),fragment3,MineDataFragment.class.getSimpleName());
                 break;
-            case 3:
+            case 4:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
                 if(fragment4 == null){
                     fragment4 = new MineDataFragment();
                 }
                 addOrShowFragment(getSupportFragmentManager().beginTransaction(),fragment4,MineDataFragment.class.getSimpleName());
                 break;
             default:
+                ivVoice.setImageDrawable(ContextCompat.getDrawable(MainActivity.this,R.mipmap.main_icon_voice_default));
                 if(fragment1 == null){
                     fragment1 = new MainFragment();
                 }

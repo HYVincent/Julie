@@ -77,6 +77,19 @@
             android:screenOrientation="portrait"
             android:label="反馈"/>
 
+        <activity android:name=".widget.add_device.AddDeviceActivity"
+            android:screenOrientation="portrait"
+            android:label="添加设别"/>
+
+        <activity android:name=".widget.setting.SettingActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:label="设置"/>
+
+        <activity android:name=".widget.system_msg.SystemMsgActivity"
+            android:screenOrientation="portrait"
+            android:label="系统消息"/>
+
         <service android:name=".service.MyNettyPushService"/>
 
         <service android:name="com.amap.api.location.APSService"></service>

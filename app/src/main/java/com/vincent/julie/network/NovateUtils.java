@@ -118,7 +118,7 @@ public class NovateUtils {
      * @return
      */
     public static Novate getNovate(){
-//        if(novate == null){
+        if(novate == null){
             novate = new Novate.Builder(MyLibrary.getmContext())
                     .client(getOkHttpClient())
                     .connectTimeout(NETWORK_CONNECT_TIME_OUT)
@@ -128,10 +128,10 @@ public class NovateUtils {
 //                    .addInterceptor(new MyNetworkInterceptor())
                     .addInterceptor(new UrlInterceptor())
                     .addHeader(headers)
-                    .addCache(true)
+                    .addCache(false)
                     .addLog(true)
                     .build();
-//        }
+        }
         return novate;
     }
 

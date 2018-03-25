@@ -4,21 +4,24 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:src="@drawable/common_test_guide_1"
+        android:src="@drawable/common_guide_three"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_50"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="71dp"
-        android:text="Button"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_marginLeft="@dimen/size_16"
+        android:background="@drawable/shape_background_start"
+        android:text="开启我的智家"
         android:textSize="20sp"
         android:gravity="center"
-        android:textColor="@color/color_black_333333" />
+        android:textColor="@color/color_white_ffffff" />
 
 
 </RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/frg_info_weather_rl"
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44">
+
+        <ImageView
+            android:id="@+id/frg_data_iv_1"
+            android:src="@mipmap/common_icon_weather_fine"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/frg_data_iv_1"
+            android:text="@string/frg_info_text_weather"
+            android:id="@+id/frg_data_electro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:src="@mipmap/common_icon_arrow_right"
+            android:layout_marginRight="@dimen/size_15"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/frg_info_nofity_rl"
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44">
+
+        <ImageView
+            android:id="@+id/frg_data_iv_2"
+            android:src="@mipmap/info_icon_notify"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/frg_data_iv_2"
+            android:text="@string/frg_info_text_notify"
+            android:id="@+id/frg_data_environmental_parameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:src="@mipmap/common_icon_arrow_right"
+            android:layout_marginRight="@dimen/size_15"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/frg_info_sos_phone_rl"
+        android:background="@color/color_white_ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_44">
+
+        <ImageView
+            android:id="@+id/frg_data_iv_3"
+            android:src="@mipmap/info_icon_sos_phone"
+            android:layout_marginLeft="@dimen/size_16"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/frg_data_iv_3"
+            android:text="@string/frg_info_text_emergency_num"
+            android:id="@+id/frg_data_security_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:src="@mipmap/common_icon_arrow_right"
+            android:layout_marginRight="@dimen/size_15"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/size_22"
+            android:layout_height="@dimen/size_22" />
+
+    </RelativeLayout>
+
+</LinearLayout>

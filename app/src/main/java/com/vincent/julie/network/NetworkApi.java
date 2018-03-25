@@ -33,7 +33,7 @@ public interface NetworkApi {
      */
     @Keep
     @Headers({"url_tag:weather"})
-    @GET("weather/weatherInfo")
+    @GET("v3/weather/weatherInfo")
     Observable<String> getCurrentAreaWeather(
         @Query("key")String key,
         @Query("output")String output,

@@ -13,6 +13,8 @@
     <color name="color_black_000000">#000000</color>
     <color name="color_gray_f1f3f4">#f1f3f4</color>
 
+    <color name="color_yellow_ffcb8d">#ffcd8d</color>
+
     <!--半透明-->
     <color name="color_black_semitransparent">#e0000000</color>
 

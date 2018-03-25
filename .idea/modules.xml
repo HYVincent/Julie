@@ -6,9 +6,7 @@
       <module fileurl="file://D:\CommonDemo\Julie\Julie.iml" filepath="D:\CommonDemo\Julie\Julie.iml" />
       <module fileurl="file://E:\develop_utils\AndroidStudioProject\Julie\.idea\Julie.iml" filepath="E:\develop_utils\AndroidStudioProject\Julie\.idea\Julie.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://E:\develop_utils\AndroidStudioProject\Julie\app\app.iml" filepath="E:\develop_utils\AndroidStudioProject\Julie\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mylibrary/mylibrary.iml" filepath="$PROJECT_DIR$/mylibrary/mylibrary.iml" />
-      <module fileurl="file://E:\develop_utils\AndroidStudioProject\Julie\mylibrary\mylibrary.iml" filepath="E:\develop_utils\AndroidStudioProject\Julie\mylibrary\mylibrary.iml" />
     </modules>
   </component>
 </project>

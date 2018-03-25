@@ -3,6 +3,7 @@ package com.vincent.julie.widget.frg_mine;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.elvishew.xlog.XLog;
 import com.vincent.julie.R;
 import com.vincent.julie.bean.INetworkResponseListener;
 import com.vincent.julie.bean.ResponseEntity;
@@ -35,7 +36,7 @@ public class FrgMinePresenterImpl implements IFrgMinePresenter {
             @Override
             public void responseResult(ResponseEntity resultEntity) {
                 if(ResultUtil.success(view,resultEntity)){
-                    VersionBean bean = JSON.parseObject(JSON.toJSONString(resultEntity),VersionBean.class);
+                    VersionBean bean = JSON.parseObject(JSON.toJSONString(resultEntity.getData()),VersionBean.class);
                     view.newVersion(bean);
                 }
             }

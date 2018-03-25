@@ -2,6 +2,8 @@ package com.vincent.julie.widget.frg_mine;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
+import com.elvishew.xlog.XLog;
 import com.tamic.novate.Throwable;
 import com.vincent.julie.bean.INetworkResponseListener;
 import com.vincent.julie.bean.ResponseEntity;
@@ -23,7 +25,7 @@ public class FrgMineModelImpl implements IFrgMineModel {
         NovateUtils.getNovate().call(NovateUtils.getMyApi().checkNewVersion(version), new MySubscriber<ResponseEntity>(mContext) {
             @Override
             public void onError(Throwable e) {
-                iNetworkResponseListener.responseError(e);
+                iNetworkResponseListener.responseError(null);
             }
 
             @Override

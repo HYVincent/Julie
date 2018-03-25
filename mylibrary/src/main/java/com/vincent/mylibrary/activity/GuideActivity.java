@@ -15,6 +15,7 @@ import com.vincent.mylibrary.MyLibrary;
 import com.vincent.mylibrary.R;
 import com.vincent.mylibrary.adapter.ViewPagerAdapter;
 import com.vincent.mylibrary.util.IntentUtils;
+import com.vincent.mylibrary.util.UIUtils;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class GuideActivity extends AppCompatActivity{
     // 图片资源，这里我们放入了3张图片，因为第四张图片，我们已经在guide_content_view.xml中加载好了
     // 一会直接添加这个文件就可以了。
     private final int images[] = {
-            R.drawable.common_test_guide_1,  R.drawable.common_test_guide_1,  R.drawable.common_test_guide_1
+            R.drawable.common_guide_one,  R.drawable.common_guide_two
     };
 
     // 底部导航的小点
@@ -56,6 +57,7 @@ public class GuideActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+        UIUtils.getInstance().hideBottomUIMenu(this);
         initView();
     }
 
@@ -80,12 +82,13 @@ public class GuideActivity extends AppCompatActivity{
 
             }
         });
-
     }
+
+    private LinearLayout layout;
 
     private void initDot() {
         // 找到放置小点的布局
-        LinearLayout layout = (LinearLayout) findViewById(R.id.guide_dots);
+        layout =  findViewById(R.id.guide_dots);
 
         // 初始化小点数组
         guideDots = new ImageView[mViews.size()];
@@ -102,7 +105,7 @@ public class GuideActivity extends AppCompatActivity{
     }
 
     private void initGuideView() {
-        guideViewPager = (ViewPager) findViewById(R.id.viewPage);
+        guideViewPager =  findViewById(R.id.viewPage);
         mViews = new ArrayList<View>();
 
         for (int i = 0; i < images.length; i++) {
@@ -139,8 +142,12 @@ public class GuideActivity extends AppCompatActivity{
         }
         guideDots[position].setSelected(true);
         guideDots[currentIndex].setSelected(false);
-
         currentIndex = position;
+        if(layout != null && position == mViews.size()-1){
+            layout.setVisibility(View.GONE);
+        }else {
+            layout.setVisibility(View.VISIBLE);
+        }
     }
 
     private void goLogin() {

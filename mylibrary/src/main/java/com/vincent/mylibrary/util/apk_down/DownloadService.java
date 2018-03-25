@@ -75,6 +75,8 @@ public class DownloadService extends Service {
 
     private DownloadBinder mBinder = new DownloadBinder();
 
+    private int notifyImg;
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
@@ -82,8 +84,9 @@ public class DownloadService extends Service {
 
     public  class DownloadBinder extends Binder {
 
-        public void startDownload(String url,String notificationTitle) {
+        public void startDownload(String url,int notifyImgId,String notificationTitle) {
             if (downloadTask == null) {
+                notifyImg = notifyImgId;
                 downloadUrl = url;
                 downloadTask = new DownloadTask(DownloadService.this,listener);
                 downloadTask.execute(downloadUrl);
@@ -126,7 +129,7 @@ public class DownloadService extends Service {
         Intent intent = new Intent("toncentsoft.hengfuwei.ui.avtivity.LoginActivity");
         PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(notifyImg);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background));
         builder.setContentIntent(pi);
         builder.setContentTitle(title);

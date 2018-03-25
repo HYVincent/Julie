@@ -30,7 +30,7 @@ public class InputContentCenterDialog extends BaseDialog {
 
     private TextView tvTitle,tvCancel,tvGo;
     private EditText etInput;
-    private String strTitle,strCancel,strGo,strHintText;
+    private String strTitle="请输入内容",strCancel="取消",strGo="确定",strHintText="请输入";
     private InputContentDialogListener inputContentDialogListener;
     //是否判断内容为空
     private boolean isCheckNull = false;
