@@ -56,11 +56,15 @@ public class SceneFragment extends BaseFragment implements ISceneView {
     }
 
     private void initRecycleView() {
+        //初始化gradLayoutManager对象，并设置横向item数量为2
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         recycleView.setLayoutManager(gridLayoutManager);
         adapter = new SceneAdapter(getContext());
+        //给adapter绑定数据
         adapter.setData(data);
+        //给RecycleView设置适配器
         recycleView.setAdapter(adapter);
+        //添加Item之间的间距
         recycleView.addItemDecoration(new SpaceItemDecoration(10));
     }
 

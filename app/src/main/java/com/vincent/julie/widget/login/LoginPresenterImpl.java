@@ -36,24 +36,35 @@ public class LoginPresenterImpl implements ILoginPresenter {
     @Override
     public void login(final Context mContext, String phone, String password) {
         if(TextUtils.isEmpty(phone)){
+            //检查用户账号
             view.toastMsg(mContext.getString(R.string.toast_msg_phone_is_null));
             return;
         }
         if(phone.length() != 11){
+            //检查账号长度
             view.toastMsg(mContext.getString(R.string.toast_msg_phone_length_error));
             return;
         }
+        //检查用户密码
         if(TextUtils.isEmpty(password)){
             view.toastMsg(mContext.getString(R.string.toast_msg_password_is_null));
             return;
         }
+        //判断密码范围
         if(password.length()>16 || password.length()<6){
             view.toastMsg(mContext.getString(R.string.toast_msg_password_not_standard));
             return;
         }
+        //使用MD5对用户密码进行加密处理
         password = MD5Utils.md5Code(password);
+        //提示用户正在登录..
         view.showLoadingDialog(mContext.getString(R.string.loading_msg_login));
+        //调用model的login函数并传递参数
         model.login(mContext, phone, password, new INetworkResponseListener() {
+            /**
+             * 登录结果处理
+             * @param resultEntity
+             */
             @Override
             public void responseResult(ResponseEntity resultEntity) {
                 if(ResultUtil.success(view,resultEntity)){
@@ -65,11 +76,18 @@ public class LoginPresenterImpl implements ILoginPresenter {
                 }
             }
 
+            /**
+             * 登录失败
+             * @param throwable
+             */
             @Override
             public void responseError(Throwable throwable) {
                 ResultUtil.error(view);
             }
 
+            /**
+             * 服务器没有响应任何结果
+             */
             @Override
             public void responseIsNull() {
                 ResultUtil.error(view);

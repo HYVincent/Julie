@@ -186,14 +186,16 @@ public class MainActivity extends BaseActivity implements BackHandledInterface,C
      */
     private void addOrShowFragment(FragmentTransaction transaction,
                                    Fragment fragment,String tag) {
+        //如果目标Fragment和当前Fragment一致，则无需改变
         if (currentFragment == fragment){ return;}
         if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
             transaction.hide(currentFragment)
                     .add(R.id.main_rl_content, fragment,tag).commit();
         } else {
-//            transaction.hide(currentFragment).show(fragment).commit();
+            //隐藏当前Fragment并显示目标Fragment
             transaction.hide(currentFragment).show(fragment).commitAllowingStateLoss ();
         }
+        //设置当前fragment为目标fragment
         currentFragment = fragment;
     }
 }

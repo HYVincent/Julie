@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.3" /><!--设置屏幕垂直分割引导线的位置上下比例-->
 
     <LinearLayout
         android:id="@+id/button2"

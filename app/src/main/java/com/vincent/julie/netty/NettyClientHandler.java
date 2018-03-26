@@ -1,6 +1,7 @@
 package com.vincent.julie.netty;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
@@ -77,10 +78,12 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
     //这里是接受服务端发送过来的消息
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, BaseMsg baseMsg) throws Exception {
+        //对baseMsg进行非空判断
         if(baseMsg == null){
             Log.d(TAG, "messageReceived: baseMsg is null");
             return;
         }
+        //根据类型判断
         switch (baseMsg.getType()) {
             case LOGIN:
                 //向服务器发起登录
@@ -90,10 +93,12 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
                 loginMsg.setUserName(MyApp.user.getUser_name());
                 channelHandlerContext.writeAndFlush(loginMsg);
                 break;
+                //收到pign消息
             case PING:
                 System.out.println("receive ping from server----------"+ DateUtils.getDateString(DateUtils.DATE_FORMAT_ALL,System.currentTimeMillis())+"--------------");
                 break;
             case PUSH:
+                //收到push消息
                 PushMsg pushMsg = (PushMsg) baseMsg;
                 if(pushMsg!=null){
                     Log.d(TAG, "messageReceived: "+pushMsg.getPhoneNum()+" "+String.valueOf(pushMsg.getData()));
@@ -107,4 +112,5 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<BaseMsg> {
         }
         ReferenceCountUtil.release(baseMsg);
     }
+
 }

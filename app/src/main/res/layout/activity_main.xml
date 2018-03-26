@@ -39,9 +39,6 @@
         android:layout_above="@id/textView2"
         android:id="@+id/main_rl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </RelativeLayout>
-
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

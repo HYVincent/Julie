@@ -87,11 +87,13 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
                     }
                 }
                 response.body().close();
+                //下载成功
                 return TYPE_SUCCESS;
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            //释放资源
             try {
                 if (is != null) {
                     is.close();
@@ -106,6 +108,7 @@ public class DownloadTask extends AsyncTask<String, Integer, Integer> {
                 e.printStackTrace();
             }
         }
+        //下载失败
         return TYPE_FAILED;
     }
 

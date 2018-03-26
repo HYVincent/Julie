@@ -31,7 +31,7 @@ public class LoginModelImpl implements ILoginModel {
      * @param mContext
      * @param phone 手机号码
      * @param password 密码
-     * @param iNetworkResponseListener
+     * @param iNetworkResponseListener 网络访问结果回调接口
      */
     @Override
     public void login(final Context mContext, String phone, String password,
@@ -43,14 +43,17 @@ public class LoginModelImpl implements ILoginModel {
                 new MySubscriber<ResponseEntity>(mContext) {
                     @Override
                     public void onError(Throwable e) {
+                        //登录出错
                         iNetworkResponseListener.responseError(e);
                     }
 
                     @Override
                     public void onNext(ResponseEntity responseEntity) {
                         if(responseEntity != null){
+                            //通过NetworkResponseListener接口把登录结果回调给Presenter
                             iNetworkResponseListener.responseResult(responseEntity);
                         }else {
+                            //响应结果为空
                             iNetworkResponseListener.responseIsNull();
                         }
                     }

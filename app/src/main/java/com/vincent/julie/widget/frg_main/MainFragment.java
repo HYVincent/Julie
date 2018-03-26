@@ -152,23 +152,29 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         //启动定位
         mLocationClient.startLocation();
     }
-
+    //权限请求码
     private static final int REQUEST_LOCATION_CODE = 110;
-
+    //权限数组
     private String[] PERMISSION_DESC = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    /**
+     * 请求权限任务
+     */
     @AfterPermissionGranted(REQUEST_LOCATION_CODE)
     public void callLocationTask() {
+        //检查用户是否已授权
         if (EasyPermissions.hasPermissions(getContext(), PERMISSION_DESC)) {
+            //已经授权
             startLocation();
         } else {
+            //请求权限
             EasyPermissions.requestPermissions(this,
-                    getString(R.string.request_permission_location),
+                    getString(R.string.request_permission_location),//提示用户授权
                     REQUEST_LOCATION_CODE,
                     PERMISSION_DESC);
         }
     }
-
+    //授权的结果回调
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -176,6 +182,17 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        //通过
+        startLocation();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        //没通过
+
+    }
 
     @Nullable
     @Override
@@ -314,17 +331,7 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         return false;
     }
 
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        //通过
-        startLocation();
-    }
 
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        //没通过
-
-    }
 
     @Override
     public void loadFail() {

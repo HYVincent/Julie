@@ -12,27 +12,26 @@ import com.vincent.julie.base.BaseActivity;
 import com.vincent.julie.widget.main.MainActivity;
 import com.vincent.julie.widget.register.RegisterActivity;
 import com.vincent.julie.widget.reset_password.ResetPasswordActivity;
-import com.vincent.julie.widget.welcome.WelcomeActivity;
 import com.vincent.mylibrary.more_language.AppButton;
 import com.vincent.mylibrary.more_language.AppTextView;
 import com.vincent.mylibrary.util.IntentUtils;
-import com.vincent.mylibrary.util.NotificationUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author Administrator QQ:1032006226
+ * @author Administrator
  * @version v1.0
  * @name Julie
  * @page com.vincent.julie.widget.login
- * @class describe
- * @date 2018/3/11 0:16
+ * @class describe 用户登录界面
  */
-
 public class LoginActivity extends BaseActivity implements ILoginView{
 
+    /**
+     * 初始化Activity中的控件
+     */
     @BindView(R.id.login_et_phone)
     EditText loginEtPhone;
     @BindView(R.id.login_et_password)
@@ -43,9 +42,15 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     AppTextView loginTvResetPassword;
     @BindView(R.id.login_btn_action)
     AppButton loginBtnAction;
-
+    /**
+     * 初始化Presenter实例
+     */
     private ILoginPresenter presenter;
 
+    /**
+     * 调用此函数跳转到登录页面
+     * @param activity
+     */
     public static void actionStart(Activity activity){
         Intent intent = new Intent(activity,LoginActivity.class);
         IntentUtils.startNewActivity(activity,intent);
@@ -56,9 +61,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        loginEtPhone.setText("18696855784");
-        loginEtPhone.setSelection(loginEtPhone.getText().length());
-        loginEtPassword.setText("555555");
+        //初始化presenter对象
         presenter = new LoginPresenterImpl(this);
     }
 
@@ -66,13 +69,15 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_tv_register:
+                //点击注册按钮跳转到注册页面
                 RegisterActivity.actionStart(LoginActivity.this);
                 break;
             case R.id.login_tv_reset_password:
-//                NotificationUtil.sendNotification(LoginActivity.this, WelcomeActivity.class,R.mipmap.ic_launcher,"测试","消息");
+                //点击跳转到忘记密码页面
                 ResetPasswordActivity.actionStart(LoginActivity.this);
                 break;
             case R.id.login_btn_action:
+                //点击执行登录
                 presenter.login(LoginActivity.this,
                         loginEtPhone.getText().toString(),
                         loginEtPassword.getText().toString());
@@ -81,11 +86,17 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         }
     }
 
+    /**
+     * 登录失败
+     */
     @Override
     public void loadFail() {
-
+        toastMsg("登录失败");
     }
 
+    /**
+     * 登录成功
+     */
     @Override
     public void loginSuccess() {
         MainActivity.actionStart(LoginActivity.this);

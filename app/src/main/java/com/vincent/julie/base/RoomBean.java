@@ -1,5 +1,8 @@
 package com.vincent.julie.base;
 
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
 /**
  * @author Administrator QQ:1032006226
  * @version v1.0

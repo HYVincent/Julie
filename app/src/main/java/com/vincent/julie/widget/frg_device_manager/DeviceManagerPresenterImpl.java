@@ -32,35 +32,35 @@ public class DeviceManagerPresenterImpl implements IDeviceManagerPresenter {
         List<DeviceListBean> data = new ArrayList<>();
         DeviceListBean deviceBean = new DeviceListBean();
         deviceBean.setName("灯光");
-        deviceBean.setRunNum(20);
+        deviceBean.setTotalNum(20);
         deviceBean.setRunNum(11);
         deviceBean.setType(1);
         data.add(deviceBean);
 
         DeviceListBean powDeviceBean = new DeviceListBean();
         powDeviceBean.setName("电源");
-        powDeviceBean.setRunNum(4);
+        powDeviceBean.setTotalNum(4);
         powDeviceBean.setRunNum(1);
         powDeviceBean.setType(2);
         data.add(powDeviceBean);
 
         DeviceListBean curtainDeviceBean = new DeviceListBean();
         curtainDeviceBean.setName("窗帘");
-        curtainDeviceBean.setRunNum(3);
+        curtainDeviceBean.setTotalNum(3);
         curtainDeviceBean.setRunNum(2);
         curtainDeviceBean.setType(3);
         data.add(curtainDeviceBean);
 
         DeviceListBean playDeviceBean = new DeviceListBean();
         playDeviceBean.setName("影音");
-        playDeviceBean.setRunNum(1);
+        playDeviceBean.setTotalNum(1);
         playDeviceBean.setRunNum(0);
         playDeviceBean.setType(4);
         data.add(playDeviceBean);
 
         DeviceListBean airConditionerdeviceBean = new DeviceListBean();
         airConditionerdeviceBean.setName("空调");
-        airConditionerdeviceBean.setRunNum(2);
+        airConditionerdeviceBean.setTotalNum(2);
         airConditionerdeviceBean.setRunNum(1);
         airConditionerdeviceBean.setType(5);
         data.add(airConditionerdeviceBean);
@@ -74,7 +74,7 @@ public class DeviceManagerPresenterImpl implements IDeviceManagerPresenter {
 
         DeviceListBean security = new DeviceListBean();
         security.setName("安防");
-        security.setRunNum(3);
+        security.setTotalNum(3);
         security.setRunNum(3);
         security.setType(7);
         data.add(security);
