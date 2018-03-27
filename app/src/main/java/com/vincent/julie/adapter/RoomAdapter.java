@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vincent.julie.R;
-import com.vincent.julie.base.RoomBean;
+import com.vincent.julie.bean.RoomBean;
 
 import java.util.List;
 

@@ -46,11 +46,11 @@ public interface NetworkApi {
      * @param user_password
      * @return
      */
-    @Keep
-    @POST("user/login")
-    Observable<ResponseEntity> login(
-            @Query("user_phone") String user_phone,
-            @Query("user_password") String user_password
+    @Keep//保持接口不被混淆
+    @POST("user/login")//定义登录接口的路径
+    Observable<ResponseEntity> login(//函数名
+            @Query("user_phone") String user_phone,//登录账号 参数名称和参数类型
+            @Query("user_password") String user_password//密码
     );
 
     /**

@@ -63,6 +63,8 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView, Easy
     RelativeLayout frgMineRlSystemMsg;
     @BindView(R.id.frg_mine_tv_account)
     TextView tvAccount;
+    @BindView(R.id.frg_mine_tv_current_version)
+    TextView frgMineTvCurrentVersion;
     Unbinder unbinder;
     private View view;
 
@@ -83,6 +85,7 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView, Easy
         if (MyLibrary.getSpUtil().getBoolean(AppConfig.EVENTMSG_NEW_VERSION, false)) {
             frgMineTvNewVersion.setVisibility(View.VISIBLE);
         }
+        frgMineTvCurrentVersion.setText("V"+BuildConfig.VERSION_NAME);
         return view;
     }
 
@@ -185,8 +188,10 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView, Easy
         if (EasyPermissions.hasPermissions(getContext(), PERMISSIONS)) {
             downApk();
         } else {
-            EasyPermissions.requestPermissions(this,
-                    getString(R.string.toast_msg_permission_fail), PERMISSION_CAODE_DOWN, PERMISSIONS);
+            EasyPermissions.requestPermissions(this,//上下文对象，一般为Activity或者Fragment
+                    getString(R.string.toast_msg_permission_fail), //用户拒绝权限的提示信息
+                    PERMISSION_CAODE_DOWN,//权限申请代码
+                    PERMISSIONS);//需要申请的权限列表
         }
     }
 

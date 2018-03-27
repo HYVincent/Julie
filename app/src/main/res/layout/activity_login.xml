@@ -23,12 +23,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <ImageView
+            android:src="@mipmap/icon_app_logo"
             android:layout_marginTop="@dimen/size_20"
             android:textSize="@dimen/text_size_24sp"
-            android:text="@string/login_text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="@dimen/size_96"
+            android:layout_height="@dimen/size_96" />
 
     </LinearLayout>
 

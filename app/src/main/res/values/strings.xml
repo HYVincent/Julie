@@ -39,7 +39,7 @@
     <string name="man_text_tab_1">首页</string>
     <string name="man_text_tab_2">房间</string>
     <string name="man_text_tab_3">设备管理</string>
-    <string name="man_text_tab_4">我的</string>
+    <string name="man_text_tab_4">设置</string>
 
     
     <string name="login_text_statement">本APP为Julie版权所有</string>

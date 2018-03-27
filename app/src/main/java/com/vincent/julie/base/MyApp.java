@@ -3,6 +3,7 @@ package com.vincent.julie.base;
 import android.app.Application;
 
 import com.mob.MobSDK;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.vincent.julie.bean.User;
 import com.vincent.mylibrary.MyLibrary;
@@ -33,5 +34,6 @@ public class MyApp extends Application{
         user = new User();
         MobSDK.init(this);
         CrashReport.initCrashReport(getApplicationContext(), "9589575c85", false);
+        FlowManager.init(this);
     }
 }

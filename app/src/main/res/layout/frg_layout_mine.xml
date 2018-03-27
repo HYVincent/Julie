@@ -10,7 +10,7 @@
         android:textSize="@dimen/text_size_18sp"
         android:gravity="center"
         android:textColor="@color/color_white_ffffff"
-        android:text="@string/frg_mine_text_title"
+        android:text="@string/frg_mine_text_setting"
         android:background="@color/color_blue_63d8ff"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_49" />
@@ -192,6 +192,7 @@
                 android:layout_height="@dimen/size_22" />
 
             <TextView
+                android:id="@+id/frg_mine_tv_1"
                 android:text="@string/frg_mine_text_upgrade"
                 android:layout_marginLeft="@dimen/size_15"
                 android:layout_toRightOf="@id/mine_upgrade_iv"
@@ -199,6 +200,19 @@
                 android:textColor="@color/color_black_333333"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/frg_mine_tv_current_version"
+                android:layout_marginLeft="@dimen/size_5"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="-1dp"
+                android:layout_alignBottom="@id/frg_mine_tv_1"
+                android:layout_toRightOf="@id/frg_mine_tv_1"
+                android:textColor="@color/color_gray_999999"
+                android:textSize="@dimen/text_size_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
 
             <ImageView
                 android:id="@+id/frg_mine_iv_1"

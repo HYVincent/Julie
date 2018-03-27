@@ -36,17 +36,17 @@ public class LoginModelImpl implements ILoginModel {
     @Override
     public void login(final Context mContext, String phone, String password,
                       final INetworkResponseListener iNetworkResponseListener) {
-
-        NovateUtils.getNovate().call(NovateUtils.getMyApi().login(
-                phone,
-                password),
-                new MySubscriber<ResponseEntity>(mContext) {
+        //调用登录接口进行网络请求
+        NovateUtils.getNovate().
+                call(NovateUtils.getMyApi().login(
+                phone,//用户手机号码
+                password),//用户密码
+                new MySubscriber<ResponseEntity>(mContext) {//订阅登录结果回调
                     @Override
                     public void onError(Throwable e) {
                         //登录出错
                         iNetworkResponseListener.responseError(e);
                     }
-
                     @Override
                     public void onNext(ResponseEntity responseEntity) {
                         if(responseEntity != null){
