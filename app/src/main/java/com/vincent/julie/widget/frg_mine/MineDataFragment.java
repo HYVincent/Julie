@@ -124,6 +124,8 @@ public class MineDataFragment extends BaseFragment implements IFrgMineView, Easy
                         .setOnActionClickListener(new OrdinaryMsgDialog.OnActionClickListener() {
                             @Override
                             public void doAction() {
+                                MyLibrary.getSpUtil().putString(AppConfig.SHARED_ACCOUNT,"");
+                                MyLibrary.getSpUtil().putString(AppConfig.SHARED_PASSWORD,"");
                                 getActivity().finish();
                                 LoginActivity.actionStart(getActivity());
                             }
