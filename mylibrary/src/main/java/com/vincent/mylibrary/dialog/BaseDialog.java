@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.vincent.mylibrary.R;
-import com.vincent.mylibrary.util.DpUtil;
+import com.vincent.mylibrary.util.DensityUtil;
 import com.vincent.mylibrary.util.ScreenUtils;
 
 
@@ -66,7 +66,7 @@ public class BaseDialog extends Dialog {
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         if(width == 0){
 //            width = ScreenUtils.getScreenWidth(getContext());
-            width = ScreenUtils.getScreenWidth(getContext()) - 2 * DpUtil.dp2px(getContext(), margin);
+            width = ScreenUtils.getScreenWidth(getContext()) - 2 * DensityUtil.dip2px(getContext(), margin);
         }
         if(height == 0){
             height = WindowManager.LayoutParams.WRAP_CONTENT;

@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.vincent.julie.R;
 import com.vincent.julie.adapter.DeviceListAdapter;
 import com.vincent.julie.adapter.DeviceListBean;
 import com.vincent.julie.base.BaseFragment;
+import com.vincent.julie.bean.DeviceBean;
 import com.vincent.julie.widget.add_device.AddDeviceActivity;
 
 import java.util.ArrayList;
@@ -83,7 +85,7 @@ public class DeviceManagerFragment extends BaseFragment implements IDeviceManage
         adapter.setOnItemClickListener(new DeviceListAdapter.DeviceItemOnClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                
             }
         });
         recyclerView.setAdapter(adapter);

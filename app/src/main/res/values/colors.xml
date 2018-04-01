@@ -9,6 +9,8 @@
 
     <color name="color_gray_8a8a8a">#8a8a8a</color>
 
+    <color name="color_gray_454a42">#454a42</color>
+
 
     <color name="color_gray_e5e5e5">#e5e5e5</color>
     <!--默认的背景颜色-->
@@ -16,11 +18,13 @@
 
     <color name="color_white_f4f4f4">#f4f4f4</color>
 
+    <color name="color_green_3ab86d">#3ab86d</color>
     
     <color name="color_gray_999999">#999999</color>
     <color name="color_gray_666666">#666666</color>
 
     <color name="color_yellow_ffcb8d">#ffcb8d</color>
+    <color name="color_yellow_f99d59">#f99d59</color>
     <color name="color_red_FF0000">#FF0000</color>
 
 

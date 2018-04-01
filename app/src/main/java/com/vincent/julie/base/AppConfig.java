@@ -39,5 +39,13 @@ public class AppConfig {
      * 是否有新版本
      */
     public static final String EVENTMSG_NEW_VERSION = "eventmsg_new_version";
+    /**
+     * 账号
+     */
+    public static final String SHARED_ACCOUNT = "shared_account";
+    /**
+     * 密码
+     */
+    public static final String SHARED_PASSWORD = "shared_password";
 
 }

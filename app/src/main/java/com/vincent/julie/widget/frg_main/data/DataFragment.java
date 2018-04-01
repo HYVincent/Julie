@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 
 import com.vincent.julie.R;
 import com.vincent.julie.base.BaseFragment;
+import com.vincent.julie.widget.environmental_parameter.EnvironmentalParameterActivity;
+import com.vincent.julie.widget.household_electricity.HouseholdElectricityActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +63,10 @@ public class DataFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.frg_data_electro_rl:
+                HouseholdElectricityActivity.actionStart(getActivity());
                 break;
             case R.id.frg_data_prarams_rl:
+                EnvironmentalParameterActivity.actionStart(getActivity());
                 break;
             case R.id.frg_data_alarm_rl:
                 break;

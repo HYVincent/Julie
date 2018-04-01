@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_gray_454a42"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_layout_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@drawable/shape_background_green"
+            android:layout_margin="@dimen/size_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1">
+
+               <TextView
+                   android:textColor="@color/color_white_ffffff"
+                   android:background="@color/color_green_3ab86d"
+                   android:padding="@dimen/size_8"
+                   android:layout_margin="@dimen/size_10"
+                   android:gravity="center"
+                   android:text="@string/household_electricity_today_use"
+                   android:layout_width="@dimen/size_100"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/household_electricity_tv_kwh"
+                   android:gravity="center"
+                   android:textStyle="bold"
+                   android:textAllCaps="false"
+                   android:textColor="@color/color_white_ffffff"
+                   android:text="@string/household_electricity_kwh"
+                   android:layout_alignParentRight="true"
+                   android:layout_centerVertical="true"
+                   android:padding="@dimen/size_8"
+                   android:textSize="@dimen/text_size_12sp"
+                   android:layout_width="@dimen/size_80"
+                   android:layout_height="wrap_content" />
+
+               <TextView
+                   android:id="@+id/household_electricity_kwh"
+                   android:textColor="@color/color_white_ffffff"
+                   android:layout_centerVertical="true"
+                   android:layout_toLeftOf="@id/household_electricity_tv_kwh"
+                   android:text="0"
+                   android:textSize="@dimen/text_size_14sp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+           </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/color_green_3ab86d"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:gravity="center"
+                    android:textColor="@color/color_white_ffffff"
+                    android:background="@color/color_yellow_f99d59"
+                    android:padding="@dimen/size_8"
+                    android:layout_margin="@dimen/size_10"
+                    android:text="@string/household_electricity_all_total"
+                    android:layout_width="@dimen/size_100"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/household_electricity_tv_money"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_white_ffffff"
+                    android:text="@string/household_electricity_money"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/size_8"
+                    android:textSize="@dimen/text_size_12sp"
+                    android:layout_width="@dimen/size_80"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/household_electricity_tv_total_money"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/household_electricity_tv_money"
+                    android:text="0"
+                    android:textColor="@color/color_white_ffffff"
+                    android:textSize="@dimen/text_size_14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.vincent.julie.view.StatisticsView
+            android:id="@+id/household_electricity_sv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

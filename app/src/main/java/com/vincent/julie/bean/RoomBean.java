@@ -25,6 +25,17 @@ public class RoomBean extends BaseModel{
     public long id;
     @Column
     private String roomName;
+    //房间类型 0 客厅 1 卧室  2 厨房  3 餐厅
+    @Column
+    private int type;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getRoomName() {
         return roomName;

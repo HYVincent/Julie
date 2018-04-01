@@ -120,5 +120,19 @@
     <!--系统消息-->
     <string name="system_msg_text_title">系统消息</string>
 
+    <!--家庭用电-->
+    <string name="household_electricity_text_title">家庭用电</string>
+    <string name="household_electricity_today_use">本日用电量</string>
+    <string name="household_electricity_all_total">总电费</string>
+    <string name="household_electricity_kwh">kw.h</string>
+    <string name="household_electricity_money">￥</string>
+
+    <!--环境参数-->
+    <string name="envionmental_parameter_text_title">环境参数</string>
+
+    <!--天气信息-->
+    <string name="weather_info_text_title">天气信息</string>
+    <string name="weather_info_text_current">当前温度</string>
+    <string name="weather_info_text_setting">设定温度</string>
 
 </resources>

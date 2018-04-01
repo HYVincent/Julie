@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.vincent.julie.R;
 import com.vincent.julie.base.BaseFragment;
+import com.vincent.julie.widget.weather_info.WeatherInfoActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +62,7 @@ public class InfoFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.frg_info_weather_rl:
+                WeatherInfoActivity.actionStart(getActivity());
                 break;
             case R.id.frg_info_nofity_rl:
                 break;

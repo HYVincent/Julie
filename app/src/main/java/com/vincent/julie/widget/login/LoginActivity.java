@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.vincent.julie.BuildConfig;
 import com.vincent.julie.R;
+import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.base.BaseActivity;
 import com.vincent.julie.widget.main.MainActivity;
 import com.vincent.julie.widget.register.RegisterActivity;
 import com.vincent.julie.widget.reset_password.ResetPasswordActivity;
+import com.vincent.mylibrary.MyLibrary;
 import com.vincent.mylibrary.more_language.AppButton;
 import com.vincent.mylibrary.more_language.AppTextView;
 import com.vincent.mylibrary.util.IntentUtils;
@@ -63,6 +67,20 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         ButterKnife.bind(this);
         //初始化presenter对象
         presenter = new LoginPresenterImpl(this);
+        String account = MyLibrary.getSpUtil().getString(AppConfig.SHARED_ACCOUNT,"");
+        String password = MyLibrary.getSpUtil().getString(AppConfig.SHARED_PASSWORD,"");
+        if(BuildConfig.DEBUG){
+            loginEtPhone.setText("18696855784");
+            loginEtPassword.setText("555555");
+            //模拟点击
+            loginBtnAction.performClick();
+        }else {
+            if(!TextUtils.isEmpty(account)&&!TextUtils.isEmpty(password)){
+                loginEtPhone.setText(account);
+                loginEtPassword.setText(password);
+                loginBtnAction.performClick();
+            }
+        }
     }
 
     @OnClick({R.id.login_tv_register, R.id.login_tv_reset_password, R.id.login_btn_action})
@@ -99,6 +117,8 @@ public class LoginActivity extends BaseActivity implements ILoginView{
      */
     @Override
     public void loginSuccess() {
+        MyLibrary.getSpUtil().putString(AppConfig.SHARED_ACCOUNT,loginEtPhone.getText().toString());
+        MyLibrary.getSpUtil().putString(AppConfig.SHARED_PASSWORD,loginEtPassword.getText().toString());
         MainActivity.actionStart(LoginActivity.this);
         finish();
     }
