@@ -32,7 +32,7 @@ android {
         debug {
             signingConfig signingConfigs.release
             //启用代码混淆 如果使用jdk1.8则不能混淆
-            minifyEnabled true
+            minifyEnabled false
             //zip压缩
             zipAlignEnabled false
             //移除无用的resource文件

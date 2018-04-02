@@ -49,15 +49,15 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DeviceListViewHolder holder, final int position) {
-        DeviceListBean deviceListBean = data.get(position);
+    public void onBindViewHolder(@NonNull final DeviceListViewHolder holder, final int position) {
+        DeviceListBean deviceListBean = data.get(holder.getAdapterPosition());
         holder.tvName.setText(deviceListBean.getName());
         holder.tvDesc.setText(String.valueOf(deviceListBean.getRunNum())+"/"+String.valueOf(deviceListBean.getTotalNum()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(onItemClickListener != null){
-                    onItemClickListener.onItemClick(v,position);
+                    onItemClickListener.onItemClick(v,holder.getAdapterPosition());
                 }
             }
         });

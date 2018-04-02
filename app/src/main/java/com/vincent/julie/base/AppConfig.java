@@ -47,5 +47,7 @@ public class AppConfig {
      * 密码
      */
     public static final String SHARED_PASSWORD = "shared_password";
+    //保存天气设置温度
+    public static final String SHARED_WEATHER_SETTING = "shared_weather_setting";
 
 }

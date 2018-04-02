@@ -79,8 +79,10 @@ public class WeatherView extends View {
     private float touchX = 0;
     //x轴偏移量
     private float offset_x;
+    //总的偏移量
+    private float offset_x_d;
     //X轴的最大偏移量
-    private float offset_x_max;
+    private float offset_x_max = 0f;
     private List<Float> data = new ArrayList<>();
 
     /**
@@ -92,25 +94,20 @@ public class WeatherView extends View {
         invalidate();
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 //获取手指触摸屏幕的点
-                touchX = getX();
+                touchX = event.getX();
+                Log.d(TAG, "onTouchEvent: 按下-->"+touchX);
                 break;
             case MotionEvent.ACTION_MOVE:
                 offset_x = event.getX()-touchX;
-                //防止超出屏幕
-                if(offset_x > offset_x_max){
-                    offset_x = offset_x_max;
-                }
-                //防止向左滑动到屏幕最左边的时候有空隙
-                if(offset_x < startX){
-                    offset_x = 0;
-                }
-                startX = (int)(offset_x);
-                endY = (int)(mViewWidth + getX());
+                //降低滚动的速度
+                offset_x = offset_x/5;
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
                 break;
@@ -193,7 +190,6 @@ public class WeatherView extends View {
      */
     private void drawBg(Canvas canvas) {
         mPaint.setColor(baseColor);
-        Log.d(TAG, "drawBg: "+String.valueOf(startX));
         canvas.drawLine(startX,startY,startX,marginTop,mPaint);
         //绘制左边的文字
         float tagInterval = (mViewHeight - marginButtom - marginTop) / 5;
@@ -204,7 +200,8 @@ public class WeatherView extends View {
         //描边和填充内部
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         for (int i = 0;i< 5;i++){
-            canvas.drawText(String.valueOf((-20 + i* 20)+"℃"),DisplayUtils.dp2px(mContext,8),
+            float x = DisplayUtils.dp2px(mContext,8);
+            canvas.drawText(String.valueOf((-20 + i* 20)+"℃"),x,
                     startY - i * tagInterval,mPaint);
         }
         mPaint.setStrokeWidth(2f);
@@ -219,9 +216,20 @@ public class WeatherView extends View {
         if(data.size() == 0){
             throw new NullPointerException("data size is 0.");
         }
+        mDataPath.reset();
+        mLinePath.reset();
         //绘制地下的文字
+        offset_x_d +=offset_x;
+        if(offset_x_d > 0){
+            offset_x_d = 0;
+        }
+        Log.d(TAG, "drawBg: ------>"+offset_x_max+"   "+offset_x_d);
+        if((-1)*offset_x_d >offset_x_max){
+            offset_x_d = (-1)*offset_x_max;
+        }
+        mLinePath.moveTo(startX,startY);
         for (int i = 0;i<data.size();i++){
-            float dotsX = firstTimeDots + DisplayUtils.dp2px(mContext,timeDotsInterval) * i;
+            float dotsX = firstTimeDots + DisplayUtils.dp2px(mContext,timeDotsInterval) * i+offset_x_d;
             String text = timeDots.get(i);
             Rect rect = new Rect();
             mPaint.getTextBounds(text, 0, text.length(), rect);
@@ -240,6 +248,16 @@ public class WeatherView extends View {
             mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
             mPaint.setColor(Color.parseColor("#EE9A00"));
             canvas.drawCircle(dotsX + timeDotsTextWidth/2,data2value(data.get(i)),DisplayUtils.dp2px(mContext,3),mPaint);
+            String value = String.valueOf(data.get(i))+"℃";
+            Rect rect2 = new Rect();
+            mPaint.getTextBounds(value, 0, value.length(), rect2);
+            float valueWidth = rect2.width();
+            canvas.drawText(value,dotsX + timeDotsTextWidth/2 - valueWidth/2,data2value(data.get(i))-DisplayUtils.dp2px(mContext,10),mPaint);
+            if(i == data.size() - 1 && offset_x_max == 0){
+                //初始化最大偏移量
+                offset_x_max = dotsX + timeDotsTextWidth/2 - mViewWidth+startX;
+                Log.d(TAG, "drawBg: 最大偏移量-->"+offset_x_max);
+            }
         }
         mPaint.setStrokeWidth(4f);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -248,7 +266,6 @@ public class WeatherView extends View {
 //        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         mPaint.setColor(Color.parseColor("#EE9A00"));
         canvas.drawPath(mDataPath,mPaint);
-
     }
 
     /**

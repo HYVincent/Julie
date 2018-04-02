@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.vincent.julie.R;
+import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.base.BaseActivity;
 import com.vincent.julie.view.WeatherView;
+import com.vincent.mylibrary.MyLibrary;
 import com.vincent.mylibrary.more_language.AppTextView;
 
 import java.util.ArrayList;
@@ -35,6 +39,10 @@ public class WeatherInfoActivity extends BaseActivity {
     AppTextView includeLayoutTitle;
     @BindView(R.id.weather_info_view)
     WeatherView weatherInfoView;
+    @BindView(R.id.weather_info_tv_setting)
+    TextView weatherInfoTvSetting;
+
+    private float settingValue = 0f;
 
     public static void actionStart(Activity activity) {
         Intent intent = new Intent(activity, WeatherInfoActivity.class);
@@ -48,6 +56,8 @@ public class WeatherInfoActivity extends BaseActivity {
         ButterKnife.bind(this);
         includeLayoutTitle.setText(getString(R.string.weather_info_text_title));
         weatherInfoView.setData(initData());
+        settingValue = MyLibrary.getSpUtil().getFloat(AppConfig.SHARED_WEATHER_SETTING,25.0f);
+        weatherInfoTvSetting.setText(String.valueOf(settingValue)+"℃");
     }
 
     private List<Float> initData() {
@@ -79,8 +89,30 @@ public class WeatherInfoActivity extends BaseActivity {
         return data;
     }
 
-    @OnClick(R.id.include_titie_ll_left)
-    public void onViewClicked() {
-        finish();
+    @OnClick({R.id.include_titie_ll_left,R.id.weather_info_iv_minus,R.id.weather_info_iv_add})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.include_titie_ll_left:
+                finish();
+                break;
+            case R.id.weather_info_iv_add:
+                settingValue++;
+                if(settingValue >60){
+                    settingValue = 60;
+                    toastMsg("温度最大值为60℃");
+                }
+                weatherInfoTvSetting.setText(String.valueOf(settingValue)+"℃");
+                MyLibrary.getSpUtil().putFloat(AppConfig.SHARED_WEATHER_SETTING,settingValue);
+                break;
+            case R.id.weather_info_iv_minus:
+                settingValue--;
+                if(settingValue < - 20){
+                    settingValue = -20;
+                    toastMsg("温度最小值为-20℃");
+                }
+                weatherInfoTvSetting.setText(String.valueOf(settingValue)+"℃");
+                MyLibrary.getSpUtil().putFloat(AppConfig.SHARED_WEATHER_SETTING,settingValue);
+                break;
+        }
     }
 }

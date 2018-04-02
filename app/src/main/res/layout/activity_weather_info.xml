@@ -61,10 +61,11 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:id="@+id/weather_info_tv_setting"
                     android:textColor="@color/color_red_FF0000"
                     android:layout_marginTop="@dimen/size_5"
                     android:layout_marginBottom="@dimen/size_15"
-                    android:text="28℃"
+                    android:text="25℃"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -83,6 +84,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/weather_info_iv_add"
                 android:layout_marginLeft="@dimen/size_15"
                 android:layout_marginRight="@dimen/size_15"
                 android:src="@mipmap/common_icon_add"
@@ -90,6 +92,7 @@
                 android:layout_height="@dimen/size_23" />
 
             <ImageView
+                android:id="@+id/weather_info_iv_minus"
                 android:layout_marginTop="@dimen/size_5"
                 android:layout_marginLeft="@dimen/size_15"
                 android:layout_marginRight="@dimen/size_15"
