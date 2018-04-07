@@ -63,12 +63,12 @@ MobSDK {
     SMSSDK {}
 }
 
-subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex') ) {
-                details.useVersion "27.1.0"
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion '27.1.0'
             }
         }
     }
@@ -90,29 +90,34 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.tamic.novate:novate:1.5.4.5'
-    compile 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     //APP角标控制 https://github.com/leolin310148/ShortcutBadger
-    compile 'me.leolin:ShortcutBadger:1.1.21@aar'
+    implementation 'me.leolin:ShortcutBadger:1.1.21@aar'
     //高德地图 定位模块
-    compile 'com.amap.api:location:latest.integration'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'com.youth.banner:banner:1.4.10'
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'com.youth.banner:banner:1.4.10'
 //    compile 'de.hdodenhof:circleimageview:2.2.0'
     //最新版本
     /* implementation 'com.github.bumptech.glide:glide:4.6.1'
         annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'*/
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-    compile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
     // sql-cipher database encyrption (optional)
-    compile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
-
+    implementation "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}"
+    //图片选择
+//    compile 'com.zhihu.android:matisse:0.4.3'
+    implementation('com.lzy.widget:imagepicker:0.6.1') {
+        exclude group: 'com.android.support'
+    }
+//    implementation 'com.lzy.widget:imagepicker:0.6.1'
 
     //视频播放
-    compile 'cn.jzvd:jiaozivideoplayer:6.2.8'
-    compile 'org.jetbrains:annotations-java5:15.0'
+    implementation 'cn.jzvd:jiaozivideoplayer:6.2.8'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 
 }

@@ -1,6 +1,9 @@
 package com.vincent.julie.widget.frg_main;
 
+import com.vincent.julie.bean.WeatherBean;
 import com.vincent.mylibrary.IBaseView;
+
+import java.util.List;
 
 /**
  * @author Administrator QQ:1032006226
@@ -13,6 +16,14 @@ import com.vincent.mylibrary.IBaseView;
 
 public interface IFrgInfoServiceView extends IBaseView {
 
-    void refreshWeather();
+    /**
+     * 刷新天气
+     */
+    void refreshWeather(WeatherBean weatherBean);
+
+    /**
+     * 获取天气失败
+     */
+    void refreshWeatherFail();
 
 }

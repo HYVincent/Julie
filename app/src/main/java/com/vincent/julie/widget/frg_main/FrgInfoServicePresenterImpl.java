@@ -1,15 +1,22 @@
 package com.vincent.julie.widget.frg_main;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.bean.INetworkResponseListener;
 import com.vincent.julie.bean.INetworkResponseStringListener;
 import com.vincent.julie.bean.ResponseEntity;
+import com.vincent.julie.bean.WeatherBean;
 import com.vincent.julie.widget.frg_mine.FrgMineModelImpl;
 import com.vincent.julie.widget.frg_mine.IFrgMineModel;
 import com.vincent.mylibrary.MyLibrary;
+
+import java.util.List;
 
 /**
  * @author Administrator QQ:1032006226
@@ -38,16 +45,33 @@ public class FrgInfoServicePresenterImpl implements IFrgInfoServicePresenter {
             @Override
             public void responseResult(String response) {
                 Log.d(TAG, "responseResult: 天气结果-->"+response);
+                try {
+                    WeatherBean weatherBean = JSON.parseObject(response,WeatherBean.class);
+                    if(weatherBean != null){
+                        if(TextUtils.equals(weatherBean.getStatus(),"1")){
+                            view.refreshWeather(weatherBean);
+                        }else {
+                            view.refreshWeatherFail();
+                        }
+                    }else {
+                        view.refreshWeatherFail();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    view.refreshWeatherFail();
+                }
             }
 
             @Override
             public void responseError(Throwable throwable) {
-                Log.d(TAG, "responseError: 天气信息获取失败..");
+//                Log.d(TAG, "responseError: 天气信息获取失败..");
+//                view.refreshWeatherFail();
             }
 
             @Override
             public void responseIsNull() {
-                Log.d(TAG, "responseError: 天气信息获取失败..");
+//                Log.d(TAG, "responseError: 天气信息获取失败..");
+//                view.refreshWeatherFail();
             }
         });
     }

@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
             loginEtPhone.setText("18696855784");
             loginEtPassword.setText("555555");
             //模拟点击
-            loginBtnAction.performClick();
+//            loginBtnAction.performClick();
         }else {
             if(!TextUtils.isEmpty(account)&&!TextUtils.isEmpty(password)){
                 loginEtPhone.setText(account);

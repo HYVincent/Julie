@@ -21,10 +21,14 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.lzy.imagepicker.ImagePicker;
+import com.lzy.imagepicker.bean.ImageItem;
+import com.lzy.imagepicker.ui.ImageGridActivity;
 import com.vincent.julie.BuildConfig;
 import com.vincent.julie.R;
 import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.base.BaseFragment;
+import com.vincent.julie.bean.WeatherBean;
 import com.vincent.julie.service.MyNettyPushService;
 import com.vincent.julie.view.GlideImageLoader;
 import com.vincent.julie.widget.frg_main.data.DataFragment;
@@ -32,6 +36,7 @@ import com.vincent.julie.widget.frg_main.info.InfoFragment;
 import com.vincent.julie.widget.frg_main.scene.SceneFragment;
 import com.vincent.mylibrary.adapter.MyFragmentAdapter;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
+import retrofit2.http.PUT;
 
 /**
  * @author Administrator QQ:1032006226
@@ -209,6 +215,7 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         initBanner();
         initViewPage();
         onTabSelected(0);
+        initImgSelect(1);
         return view;
     }
 
@@ -292,19 +299,60 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         }
     }
 
+    private int position;
+    private static final int IMAGE_PICKER = 101;
+    private List<Object> imageBanner = new ArrayList<>();
 
     private void initBanner() {
-        List<Integer> images = new ArrayList<>();
-        images.add(R.drawable.common_guide_one);
-        images.add(R.drawable.common_guide_two);
-        images.add(R.drawable.common_guide_three);
+        imageBanner.add(R.drawable.common_guide_one);
+        imageBanner.add(R.drawable.common_guide_two);
+        imageBanner.add(R.drawable.common_guide_three);
         banner.setDelayTime(5 * 1000);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
-        banner.setImages(images);
+        banner.setImages(imageBanner);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int positions) {
+                position = positions;
+                Intent intent = new Intent(getContext(), ImageGridActivity.class);
+                startActivityForResult(intent, IMAGE_PICKER);
+            }
+        });
+        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                toastMsg(String.valueOf(position));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == ImagePicker.RESULT_CODE_ITEMS) {
+            if (data != null && requestCode == IMAGE_PICKER) {
+                ArrayList<ImageItem> images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
+                ImageItem imageItem = images.get(0);
+                imageBanner.set(position,imageItem.path);
+            } else {
+                toastMsg("没有数据");
+            }
+        }
     }
 
     @Override
@@ -339,8 +387,21 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
     }
 
     @Override
-    public void refreshWeather() {
+    public void refreshWeather(WeatherBean data) {
+        //这里直接取第一个对象的值，貌似也只有一个对象
+        if(data.getLives()!= null && data.getLives().size()>0){
+            WeatherBean.LivesBean livesBean = data.getLives().get(0);
+            frgMainTvCurrentWeather.setText(livesBean.getWeather());
+            frgMineIvWeather.setVisibility(View.VISIBLE);
+            frgMainTvTemperature.setText(livesBean.getTemperature()+"℃ "+livesBean.getHumidity()+" "+livesBean.getWindpower()+"发布时间:"+livesBean.getReporttime());
+        }
+    }
 
+    @Override
+    public void refreshWeatherFail() {
+        frgMineIvWeather.setVisibility(View.GONE);
+        frgMainTvTemperature.setText(getString(R.string.frg_main_text_unkown_city));
+        frgMainTvCurrentWeather.setText(getString(R.string.frg_main_text_weather_fail));
     }
 
     @Override

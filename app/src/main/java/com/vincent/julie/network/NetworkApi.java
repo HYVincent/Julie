@@ -3,7 +3,9 @@ package com.vincent.julie.network;
 import android.support.annotation.Keep;
 
 import com.vincent.julie.bean.ResponseEntity;
+import com.vincent.julie.bean.WeatherBean;
 
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -34,10 +36,18 @@ public interface NetworkApi {
     @Keep
     @Headers({"url_tag:weather"})
     @GET("v3/weather/weatherInfo")
-    Observable<String> getCurrentAreaWeather(
+    Observable<WeatherBean> getCurrentAreaWeather(
         @Query("key")String key,
         @Query("output")String output,
-        @Query("ciry")String city
+        @Query("city")String city
+    );
+
+    @Keep
+    @GET("weatherInfo")
+    Call<String> getCurrentAreaWeather2(
+            @Query("key")String key,
+            @Query("output")String output,
+            @Query("ciry")String city
     );
 
     /**
@@ -47,7 +57,7 @@ public interface NetworkApi {
      * @return
      */
     @Keep//保持接口不被混淆
-    @POST("user/login")//定义登录接口的路径
+    @POST("MyWeb/user/login")//定义登录接口的路径
     Observable<ResponseEntity> login(//函数名
             @Query("user_phone") String user_phone,//登录账号 参数名称和参数类型
             @Query("user_password") String user_password//密码
@@ -60,7 +70,7 @@ public interface NetworkApi {
      * @return
      */
     @Keep
-    @POST("user/register")
+    @POST("MyWeb/user/register")
     Observable<ResponseEntity> register(
             @Query("user_phone") String user_phone,
             @Query("user_password") String user_password
@@ -72,7 +82,7 @@ public interface NetworkApi {
      * @return
      */
     @Keep
-    @POST("user/checkPhoneIsExist")
+    @POST("MyWeb/user/checkPhoneIsExist")
     Observable<ResponseEntity> checkUserIsExist(
             @Query("user_phone") String user_phone
     );
@@ -84,18 +94,53 @@ public interface NetworkApi {
      * @return
      */
     @Keep
-    @POST("user/resetPassword")
+    @POST("MyWeb/user/resetPassword")
     Observable<ResponseEntity> resetPassword(
         @Query("user_phone")String user_phone,
         @Query("user_password")String user_password
     );
 
+    /**
+     * 检查新版本
+     * @param version
+     * @return
+     */
     @Keep
-    @GET("version/checkNewVersion")
+    @GET("MyWeb/version/checkNewVersion")
     Observable<ResponseEntity> checkNewVersion(
             @Query("version")int version
     );
 
+    /**
+     * 添加备忘录
+     * @param user_id
+     * @param memo_title
+     * @param memo_content
+     * @return
+     */
+    @Keep
+    @POST("MyWeb/user/memo/addMemo")
+    Observable<ResponseEntity> addMemo(
+            @Query("user_id")String user_id,
+            @Query("memo_title")String memo_title,
+            @Query("memo_content")String memo_content
+    );
 
+    /**
+     * 提交反馈
+     * @param user_id
+     * @param feedback_title
+     * @param feedback_type 1 反馈  2 bug
+     * @param feedback_content
+     * @return
+     */
+    @Keep
+    @POST("MyWeb/user/feedback/addFeedback")
+    Observable<ResponseEntity> commitFeedback(
+            @Query("user_id")int user_id,
+            @Query("feedback_title")String feedback_title,
+            @Query("feedback_type")int feedback_type,
+            @Query("feedback_content")String feedback_content
+    );
 
 }
