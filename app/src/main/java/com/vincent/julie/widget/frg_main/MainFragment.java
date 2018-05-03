@@ -35,6 +35,8 @@ import com.vincent.julie.widget.frg_main.data.DataFragment;
 import com.vincent.julie.widget.frg_main.info.InfoFragment;
 import com.vincent.julie.widget.frg_main.scene.SceneFragment;
 import com.vincent.mylibrary.adapter.MyFragmentAdapter;
+import com.vincent.mylibrary.entity.EventMsg;
+import com.vincent.mylibrary.util.EventUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -79,6 +81,8 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
     TextView frgMinTvInfo;
     @BindView(R.id.frg_main_vp_content)
     ViewPager viewPager;
+    @BindView(R.id.frg_main_iv_add)
+    ImageView frgMainIvAdd;
     Unbinder unbinder;
     private View view;
     private static final String TAG = MainFragment.class.getSimpleName();
@@ -410,7 +414,7 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
         unbinder.unbind();
     }
 
-    @OnClick({R.id.frg_min_tv_scene, R.id.frg_min_tv_date, R.id.frg_min_tv_info})
+    @OnClick({R.id.frg_min_tv_scene, R.id.frg_min_tv_date, R.id.frg_min_tv_info,R.id.frg_main_iv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.frg_min_tv_scene:
@@ -421,6 +425,9 @@ public class MainFragment extends BaseFragment implements EasyPermissions.Permis
                 break;
             case R.id.frg_min_tv_info:
                 viewPager.setCurrentItem(2);
+                break;
+            case R.id.frg_main_iv_add:
+                EventUtil.post(new EventMsg(AppConfig.EVENTMSG_ADD_SCENE,"添加场景"));
                 break;
             default:
                 viewPager.setCurrentItem(0);

@@ -21,7 +21,7 @@ public class DateUtils  {
 
     private final static long minute = 60 * 1000;// 1分钟
     private final static long hour = 60 * minute;// 1小时
-    private final static long day = 24 * hour;// 1天
+    public final static long day = 24 * hour;// 1天
     private final static long month = 31 * day;// 月
     private final static long year = 12 * month;// 年
 

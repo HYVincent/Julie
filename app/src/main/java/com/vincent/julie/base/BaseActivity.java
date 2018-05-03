@@ -29,7 +29,6 @@ public class BaseActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog = null;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

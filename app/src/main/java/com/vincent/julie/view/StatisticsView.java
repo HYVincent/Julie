@@ -30,7 +30,7 @@ public class StatisticsView extends View {
     private Context mContext;
     private float viewWidth;
     private float viewHeight;
-    private int mBackgroundColor = Color.parseColor("#7A7A7A");
+    private int mBackgroundColor = Color.parseColor("#FFFFFF");
     //左边内边距 这里单位按照dp来算，注意转换
     private float mMarginLeft = 10;
     //底部内边距 这里单位按照dp来算，注意转换
@@ -114,7 +114,7 @@ public class StatisticsView extends View {
      */
     private void drawDatta(Canvas canvas) {
         mPaint.setStrokeWidth(3f);
-        mPaint.setColor(Color.parseColor("#FFC125"));
+        mPaint.setColor(Color.parseColor("#FF7F00"));
         float startX = mLeftLineStartX + DisplayUtils.dp2px(mContext,5);
         if(data.size() == 0){
             return;
@@ -138,6 +138,7 @@ public class StatisticsView extends View {
         float mStartX = mMarginLeft;
         float mStartY = viewHeight - DisplayUtils.dp2px(mContext,30);
         mPaint.setTextSize(mTagValueTextSize);
+        mPaint.setColor(Color.parseColor("#242424"));
         //定义的View的间隔
         intervalView = (mStartY - mTopUnused)/addValue;
         for(int i = 0;i<addValue;i++){
@@ -169,6 +170,7 @@ public class StatisticsView extends View {
             canvas.drawLine(mLeftLineStartX,mStartY - intervalView * i,viewWidth - mRightUnused,mStartY - intervalView * i,mPaint);
         }
         mPaint.setTextSize(DisplayUtils.dp2px(mContext,8));
+        mPaint.setColor(Color.parseColor("#242424"));
         // 留出10dp空白 contentWidth 内容宽度
         float contentWidth = viewWidth -mLeftLineStartX- mRightUnused - DisplayUtils.dp2px(mContext,5);
         //各个数据之间的间隔

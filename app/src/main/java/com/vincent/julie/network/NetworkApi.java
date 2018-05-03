@@ -42,13 +42,6 @@ public interface NetworkApi {
         @Query("city")String city
     );
 
-    @Keep
-    @GET("weatherInfo")
-    Call<String> getCurrentAreaWeather2(
-            @Query("key")String key,
-            @Query("output")String output,
-            @Query("ciry")String city
-    );
 
     /**
      * 登陆

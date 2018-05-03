@@ -102,6 +102,10 @@
             android:screenOrientation="portrait"
             android:label="天气情况"/>
 
+        <activity android:name=".widget.notify.ManagerNotifyActivity"
+            android:screenOrientation="portrait"
+            android:label="物业通知"/>
+
         <service android:name=".service.MyNettyPushService"/>
 
         <service android:name="com.amap.api.location.APSService"></service>

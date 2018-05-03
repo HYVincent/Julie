@@ -11,9 +11,15 @@ import android.view.ViewGroup;
 
 import com.vincent.julie.R;
 import com.vincent.julie.adapter.SceneAdapter;
+import com.vincent.julie.base.AppConfig;
 import com.vincent.julie.base.BaseFragment;
 import com.vincent.julie.bean.SceneBean;
+import com.vincent.mylibrary.entity.EventMsg;
+import com.vincent.mylibrary.util.EventUtil;
 import com.vincent.mylibrary.view.SpaceItemDecoration;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +58,11 @@ public class SceneFragment extends BaseFragment implements ISceneView {
         initRecycleView();
         presenter = new ScenePresenterImpl(this);
         presenter.initSceneData();
+        EventUtil.register(this);
         return view;
     }
+
+
 
     private void initRecycleView() {
         //初始化gradLayoutManager对象，并设置横向item数量为2
@@ -73,10 +82,20 @@ public class SceneFragment extends BaseFragment implements ISceneView {
         return false;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshView(EventMsg eventMsg){
+        switch (eventMsg.msgType){
+            case AppConfig.EVENTMSG_ADD_SCENE:
+                toastMsg("开发中..");
+                break;
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventUtil.unregister(this);
     }
 
     @Override

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/color_white_ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_60">
+
+    <ImageView
+        android:id="@+id/item_manager_notify_icon"
+        android:src="@mipmap/info_icon_notify"
+        android:layout_marginLeft="@dimen/size_16"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/size_44"
+        android:layout_height="@dimen/size_44" />
+
+    <TextView
+        android:text="2018-05-03"
+        android:id="@+id/item_manager_notify_time"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginRight="@dimen/size_16"
+        android:layout_toLeftOf="@id/item_manager_notify_time"
+        android:layout_marginLeft="@dimen/size_5"
+        android:layout_toRightOf="@id/item_manager_notify_icon"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/color_black_333333"
+            android:text="desc"
+            android:textSize="@dimen/text_size_15sp"
+            android:id="@+id/item_manager_notify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:maxLines="1"
+            android:text="descdescdescdescdescdescdescdescdescdescdescdescdescdescdescdescdescdescdesc"
+            android:ellipsize="end"
+            android:textColor="@color/color_gray_999999"
+            android:layout_marginTop="@dimen/size_5"
+            android:textSize="@dimen/text_size_12sp"
+            android:id="@+id/item_manager_notify_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
