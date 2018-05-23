@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.vincent.julie.R;
 import com.vincent.julie.adapter.RoomAdapter;
 import com.vincent.julie.base.BaseFragment;

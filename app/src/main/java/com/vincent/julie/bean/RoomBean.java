@@ -1,5 +1,6 @@
 package com.vincent.julie.bean;
 
+import android.support.annotation.Keep;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
@@ -18,6 +19,7 @@ import com.vincent.julie.base.AppDatabase;
  * @class describe https://www.jianshu.com/p/3dfeca6434b3
  * @date 2018/3/26 0:05
  */
+@Keep
 @Table(database = AppDatabase.class)
 public class RoomBean extends BaseModel{
 

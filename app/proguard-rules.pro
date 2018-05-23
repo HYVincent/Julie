@@ -200,3 +200,6 @@
   -keep class com.youth.banner.** {
       *;
    }
+
+   -dontwarn com.raizlabs.android.dbflow.**
+     -keep class com.raizlabs.android.dbflow.** {*;}

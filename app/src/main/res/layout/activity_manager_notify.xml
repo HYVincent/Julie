@@ -8,6 +8,7 @@
     <include layout="@layout/include_layout_title"/>
 
     <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
         android:id="@+id/manager_notify_rlv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
